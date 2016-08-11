@@ -1,0 +1,23 @@
+/* HOME */
+#home{
+	min-height: 300px;
+	padding: 100px 0;
+	background-color: #000;
+	justify-content: center;
+	align-items: center;
+}
+#home img{
+	height: 150px;
+}
+#home canvas{
+	z-index: -1;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+
+/* WHITE */
+.white{
+	box-shadow: 5px -10px 20px 5px #fff, -5px -10px 20px 5px #fff;
+}
