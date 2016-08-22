@@ -1,13 +1,21 @@
 /* HOME */
 #home{
 	min-height: 300px;
-	padding: 100px 0;
+	padding: 50px 0;
 	background-color: #000;
 	justify-content: center;
 	align-items: center;
 }
+#home .circle{
+	width: auto;
+	box-shadow: 0px 0px 10px #101010;
+	border-radius: 50%;
+	padding: 15px;
+	position: fixed;
+	background-color: rgba(10, 10, 10, .9);
+}
 #home img{
-	height: 150px;
+	height: 120px;
 }
 #home canvas{
 	z-index: -1;
@@ -19,5 +27,7 @@
 
 /* WHITE */
 .white{
-	box-shadow: 5px -10px 20px 5px #fff, -5px -10px 20px 5px #fff;
+	height: 200vh;
+	box-shadow: 5px 0px 10px 7px #f1e5df;
+	background-color: rgba(240, 227, 220, .9);
 }

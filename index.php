@@ -8,13 +8,15 @@
 	</head>
 	<body>
 		<div id="home">
-			<img src="graphic/image/logo.png">
+			<audio id="audio" autoplay>
+				<source src="graphic/audio/audio.mp3">
+			</audio>
+			<div class="circle">
+				<img src="graphic/image/logo_white.png">
+			</div>
 			<canvas id="home-bg"></canvas>
 		</div>
-		<div class="white view"></div>
-		<audio id="audio" controls autoplay>
-			<source src="graphic/audio/audio.mp3">
-		</audio>
+		<div class="white"></div>
 		<script src="js/script.js" type="text/javascript"></script>
 	</body>
 </html>
