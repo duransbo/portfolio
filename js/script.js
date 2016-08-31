@@ -15,6 +15,7 @@ window.onload = function() {
 	funcAnimation();
 	parallaxLogo();
 	document.querySelector('.home-logo').style.opacity = 1;
+	setTimeout(musicStart, 500);
 }
 
 window.onresize = function() {
@@ -76,7 +77,7 @@ function funcAnimation() {
 	f = 0;
 	d = 8;
 	homeBg.getContext('2d').clearRect(0,0,widthEnd,heightEnd);
-	homeBg.getContext('2d').fillStyle = 'rgba(' + parseInt(frec_array[f] / d) + ',' + parseInt((frec_array[f] / d) * (32 / 21)) + ',' + parseInt((frec_array[f] / d) * (54 / 21)) + ',' + (1 - (frec_array[f] / 350)) + ')';
+	homeBg.getContext('2d').fillStyle = 'rgba(' + parseInt(frec_array[f] / d) + ',' + parseInt((frec_array[f] / d) * (32 / 21)) + ',' + parseInt((frec_array[f] / d) * (54 / 21)) + ',' + (1 - (frec_array[f] / 500)) + ')';
 	homeBg.getContext('2d').fillRect(0, 0, widthEnd, heightEnd);
 	homeBg.getContext('2d').fillStyle = '#f1e5df';
 	homeBg.getContext('2d').beginPath();

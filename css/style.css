@@ -17,13 +17,16 @@ img{
 /* HOME */
 .home{
 	height: 400px;
-	background-image: url('../graphic/image/bg.png');
+	background-color: #000;
 }
 .home-bg{
 	z-index: -1;
 	position: absolute;
 	top: 0;
 	left: 0;
+	background-image: url('../graphic/image/bg.png');
+	background-attachment: fixed;
+	background-position: -100px;
 }
 .home-music-control{
 	width: auto;
