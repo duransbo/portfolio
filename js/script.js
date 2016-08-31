@@ -5,6 +5,7 @@ source = context.createMediaElementSource(document.querySelector('.home-music'))
 source.connect(analyser);
 analyser.connect(context.destination);
 frec_array = new Uint8Array(analyser.frequencyBinCount);
+scroll = window.pageYOffset || document.documentElement.scrollTop;
 
 homeBg = document.querySelector('.home-bg');
 document.querySelector('.home-music-play').addEventListener("click", musicStart);
@@ -23,6 +24,13 @@ window.onresize = function() {
 
 window.onscroll = function() {
 	parallaxLogo();
+
+	scroll = window.pageYOffset || document.documentElement.scrollTop
+	if(scroll > document.querySelector('.home').clientHeight + (document.querySelector('.slogan').clientHeight / 2) - (document.querySelector('.home-logo').clientHeight / 2) - parseInt(document.querySelector('.home-logo').style.top)) {
+		document.querySelector('.slogan').classList.add('pass');
+	} else {
+		document.querySelector('.slogan').classList.remove('pass');
+	}
 }
 
 
@@ -67,7 +75,8 @@ function funcAnimation() {
 	barInterval = 8;
 	f = 0;
 	d = 8;
-	homeBg.getContext('2d').fillStyle = 'rgb(' + parseInt(frec_array[f] / d) + ',' + parseInt((frec_array[f] / d) * (32 / 21)) + ',' + parseInt((frec_array[f] / d) * (54 / 21)) + ')';
+	homeBg.getContext('2d').clearRect(0,0,widthEnd,heightEnd);
+	homeBg.getContext('2d').fillStyle = 'rgba(' + parseInt(frec_array[f] / d) + ',' + parseInt((frec_array[f] / d) * (32 / 21)) + ',' + parseInt((frec_array[f] / d) * (54 / 21)) + ',' + (1 - (frec_array[f] / 350)) + ')';
 	homeBg.getContext('2d').fillRect(0, 0, widthEnd, heightEnd);
 	homeBg.getContext('2d').fillStyle = '#f1e5df';
 	homeBg.getContext('2d').beginPath();
@@ -98,7 +107,6 @@ function funcAnimation() {
 
 function parallax(iniP,endP,type,div,iniX,iniY,endX,endY,un,unY=un) {
 
-	scroll = window.pageYOffset || document.documentElement.scrollTop;
 	if ((scroll >= iniP) && (scroll <= endP)) {
 		move = ((scroll - iniP) * 100) / (endP - iniP);
 		moveX = (iniX - (((iniX - endX) * move) / 100)) + un;
