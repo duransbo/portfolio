@@ -27,10 +27,10 @@ window.onscroll = function() {
 	parallaxLogo();
 
 	scroll = window.pageYOffset || document.documentElement.scrollTop
-	if(scroll > document.querySelector('.home').clientHeight + (document.querySelector('.slogan').clientHeight / 2) - (document.querySelector('.home-logo').clientHeight / 2) - parseInt(document.querySelector('.home-logo').style.top)) {
-		document.querySelector('.slogan').classList.add('pass');
-	} else {
-		document.querySelector('.slogan').classList.remove('pass');
+
+	//CONTROL SLOGAN PHRASE
+	if ((scroll > (document.querySelector('.home').clientHeight + (document.querySelector('.slogan').clientHeight / 2) - (document.querySelector('.home-logo').clientHeight / 2) - parseInt(document.querySelector('.home-logo').style.top))) && document.querySelector('.slogan').classList.contains('ini')) {
+		document.querySelector('.slogan').classList.remove('ini');
 	}
 }
 
@@ -47,7 +47,7 @@ function musicStart() {
 
 
 function canvasD() {
-	homeBg.width = document.querySelector('.home').clientWidth - 1;
+	homeBg.width = document.querySelector('.home').clientWidth;
 	homeBg.height = document.querySelector('.home').clientHeight;
 	widthEnd = homeBg.width;
 	heightEnd = homeBg.height;
@@ -79,7 +79,7 @@ function funcAnimation() {
 	homeBg.getContext('2d').clearRect(0,0,widthEnd,heightEnd);
 	homeBg.getContext('2d').fillStyle = 'rgba(' + parseInt(frec_array[f] / d) + ',' + parseInt((frec_array[f] / d) * (32 / 21)) + ',' + parseInt((frec_array[f] / d) * (54 / 21)) + ',' + (1 - (frec_array[f] / 500)) + ')';
 	homeBg.getContext('2d').fillRect(0, 0, widthEnd, heightEnd);
-	homeBg.getContext('2d').fillStyle = '#f1e5df';
+	homeBg.getContext('2d').fillStyle = 'rgb(241, 228, 222)';
 	homeBg.getContext('2d').beginPath();
 	homeBg.getContext('2d').moveTo(widthCenter, heightEnd - frec_array[0]);
 	for (i = 1; i < analyser.frequencyBinCount; i += barInterval) {
