@@ -15,6 +15,31 @@ img {
 	max-height: 100%;
 }
 
+/* LOADING */
+.loading {
+	height: 100vh;
+	z-index: 999;
+	position: fixed;
+	font-size: 5rem;
+	color: #fff;
+	align-items: stretch;
+}
+.loading-view {
+	height: 100%;
+	z-index: 1000;
+	position: absolute;
+	justify-content: center;
+	align-items: center;
+	transition: all .5s;
+}
+.loading-bg > div {
+	width: 33.33%;
+	height: 33.33%;
+	background-color: #111;
+	transition: all .5s;
+}
+
+
 /* HOME */
 .home {
 	height: calc(100vh - var(--slogan-height));
@@ -59,35 +84,34 @@ img {
 /* SLOGAN */
 .slogan {
 	height: var(--slogan-height);
+	box-shadow: 0px -5px 5px rgb(241, 228, 222);
 	background-color: rgba(241, 228, 222, .9);
+	font-size: 3.5rem;
+	font-weight: bold;
 	text-align: center;
 	flex-wrap: nowrap;
 	justify-content: center;
 	align-items: center;
 }
 .slogan:before, .slogan:after {
-	--padding: 55px;
-
 	content: '';
 	width: 100%;
-	height: 15px;
+	height: 25px;
 	position: absolute;
 	background-image: url('../graphic/image/line.png');
 	background-size: contain;
 	background-position: center;
 }
 .slogan:before {
-	top: var(--padding);
+	top: 45px;
 	transform: rotate(180deg);
 }
 .slogan:after {
-	bottom: var(--padding);
+	bottom: 40px;
 }
 .slogan p {
 	position: absolute;
-	font-size: 3rem;
-	font-weight: bold;
-	transition: all .5s;
+	transition: all 1s;
 }
 .slogan p:first-child {
 	margin-top: 50px;
@@ -109,20 +133,27 @@ img {
 /* MENU */
 .menu {
 	height: 100vh;
-	background-image: url('../graphic/image/bg_alpha.png');
-	background-attachment: fixed;
 	align-items: stretch;
 }
 .menu ul {
-	padding: 25px;
+	padding: 15px;
 	flex-wrap: nowrap;
+	align-items: stretch;
 }
-.menu ul li {
-	height: calc(100% - 50px);
-	margin: 25px;
-	background-color: #ededed;
+.menu li {
+	width: 0px;
+	margin: 15px;
+	background-image: url('../graphic/image/bg_alpha.png');
+	background-attachment: fixed;
+	font-size: 2.5rem;
+	color: #fff;
 	justify-content: center;
 	align-items: center;
+	flex-grow: 1;
+	transition: all .2s;
+}
+.menu li:hover {
+	flex-grow: 2;
 }
 
 /* ANIMATIONS */

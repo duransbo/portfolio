@@ -1,4 +1,3 @@
-document.querySelector('.home-music').volume = 1;
 context = new AudioContext();
 analyser = context.createAnalyser();
 source = context.createMediaElementSource(document.querySelector('.home-music'));
@@ -14,8 +13,7 @@ window.onload = function() {
 	canvasD();
 	funcAnimation();
 	parallaxLogo();
-	document.querySelector('.home-logo').style.opacity = 1;
-	setTimeout(musicStart, 500);
+	offLoading();
 }
 
 window.onresize = function() {
@@ -24,14 +22,40 @@ window.onresize = function() {
 }
 
 window.onscroll = function() {
+	scroll = window.pageYOffset;
+
 	parallaxLogo();
 
-	scroll = window.pageYOffset || document.documentElement.scrollTop
-
-	//CONTROL SLOGAN PHRASE
-	if ((scroll > (document.querySelector('.home').clientHeight + (document.querySelector('.slogan').clientHeight / 2) - (document.querySelector('.home-logo').clientHeight / 2) - parseInt(document.querySelector('.home-logo').style.top))) && document.querySelector('.slogan').classList.contains('ini')) {
+	if (document.querySelector('.slogan').classList.contains('ini') && (scroll > (document.querySelector('.home').clientHeight + (document.querySelector('.slogan').clientHeight / 2) - (document.querySelector('.home-logo').clientHeight / 2) - parseInt(document.querySelector('.home-logo').style.top)))) {
 		document.querySelector('.slogan').classList.remove('ini');
 	}
+}
+
+
+function offLoading() {
+	document.querySelector('.loading-view').style.opacity = 0;
+	arr = [];
+	for (i = 0; i < document.querySelector('.loading-bg').getElementsByTagName('div').length; i++) {
+		arr[i] = i;
+	}
+	for (i = 0; i < arr.length; i++) {
+    	n = Math.floor(Math.random() * 9);
+   		tmp = arr[n];
+    	arr[n] = arr[i];
+    	arr[i] = tmp;
+	}
+	for (i = 0; i < arr.length; i++) {
+		(function (arr,i) {
+			setTimeout(function () {
+				document.querySelector('.loading-bg').getElementsByTagName('div')[arr].style.opacity = 0;
+			}, 50 * i);
+		})(arr[i],i);
+	}
+	setTimeout(function () {
+		document.querySelector('.loading').style.display = 'none';
+		document.querySelector('.home-logo').style.opacity = 1;
+		setTimeout(musicStart, 500);
+	}, (50 * i) + 500);
 }
 
 
