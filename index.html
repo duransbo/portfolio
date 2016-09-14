@@ -6,24 +6,39 @@
 		<link href="css/base.css" rel="stylesheet" type="text/css">
 		<link href="css/style.css" rel="stylesheet" type="text/css">
 		<link rel="shortcut icon" href="graphic/image/logo.ico" type="image/x-icon">
+		<style type="text/css">
+			/* LOADING */
+			.loading {
+				height: 100vh;
+				z-index: 999;
+				position: fixed;
+				background-color: #111;
+				font-size: 5rem;
+				color: #fff;
+				justify-content: center;
+				align-items: center;
+				transition: all .5s;
+			}
+		</style>
 	</head>
 	<body>
 
 		<div class="loading">
-			<div class="loading-view">
-				<p>Carregando</p>
-			</div>
-			<div class="loading-bg">
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-			</div>
+			<p>Carregando</p>
+		</div>
+
+
+		<div class="menu">
+			<div class="menu-control"><b class="icon">&#xf0c9;</b></div>
+			<nav>
+				<ul>
+					<li><b class="icon">&#xf015;</b></li>
+					<li><b class="icon">&#xf007;</b></li>
+					<li><b class="icon">&#xf19d;</b></li>
+					<li><b class="icon">&#xf121;</b></li>
+					<li><b class="icon">&#xf086;</b></li>
+				</ul>
+			</nav>
 		</div>
 
 
@@ -34,7 +49,7 @@
 			<div class="home-music-control">
 				<p><b class="home-music-play icon">&#xf04b;</b> AWOLNATION - Sail</p>
 			</div>
-			<audio class="home-music">
+			<audio class="home-music" muted>
 				<source src="graphic/audio/audio.mp3">
 			</audio>
 			<canvas width="0" height="0" class="home-bg"></canvas>
@@ -45,16 +60,6 @@
 			<p><b class="icon">&#xf063;</b> Role para baixo <b class="icon">&#xf063;</b></p>
 			<p>Para mudar o mundo, entenda o código-fonte.</p>
 		</div>
-
-
-		<nav class="menu">
-			<ul>
-				<li>Sobre</li>
-				<!-- <li>Experiencia</li> -->
-				<li>Projetos</li>
-				<!-- <li>Contato</li> -->
-			</ul>
-		</nav>
 
 
 		<script src="js/script.js" type="text/javascript"></script>

@@ -15,28 +15,29 @@ img {
 	max-height: 100%;
 }
 
-/* LOADING */
-.loading {
-	height: 100vh;
-	z-index: 999;
+
+/* MENU */
+.menu {
+	--tamanho: 70px;
+
+	width: var(--tamanho);
+	z-index: 997;
 	position: fixed;
-	font-size: 5rem;
-	color: #fff;
-	align-items: stretch;
+	right: 15px;
 }
-.loading-view {
-	height: 100%;
-	z-index: 1000;
+.menu li, .menu-control {
+	height: var(--tamanho);
+	margin-top: 15px;
+	border-radius: 50%;
+	z-index: 998;
 	position: absolute;
+	top: 0;
+	cursor: pointer;
+	background-color: #0fc0fc;
+	color: #fff;
 	justify-content: center;
 	align-items: center;
-	transition: all .5s;
-}
-.loading-bg > div {
-	width: 33.33%;
-	height: 33.33%;
-	background-color: #111;
-	transition: all .5s;
+	transition: top .5s;
 }
 
 
@@ -66,6 +67,7 @@ img {
 	align-self: flex-end;
 }
 .home-music-play {
+	cursor: pointer;
 	color: darkorange;
 }
 .home-logo {
@@ -127,33 +129,6 @@ img {
 .slogan.ini p:last-child {
 	margin-top: 50px;
 	opacity: 0;
-}
-
-
-/* MENU */
-.menu {
-	height: 100vh;
-	align-items: stretch;
-}
-.menu ul {
-	padding: 15px;
-	flex-wrap: nowrap;
-	align-items: stretch;
-}
-.menu li {
-	width: 0px;
-	margin: 15px;
-	background-image: url('../graphic/image/bg_alpha.png');
-	background-attachment: fixed;
-	font-size: 2.5rem;
-	color: #fff;
-	justify-content: center;
-	align-items: center;
-	flex-grow: 1;
-	transition: all .2s;
-}
-.menu li:hover {
-	flex-grow: 2;
 }
 
 /* ANIMATIONS */
