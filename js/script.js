@@ -1,54 +1,89 @@
 document.querySelector('.menu-control').addEventListener("click", menuControl);
-document.querySelector('.home-music-play').addEventListener("click", musicControl);
+document.querySelector('.home-music-control b').addEventListener("click", musicControl);
 
-window.onload = function() {
-	musicSinc();
-	parallaxLogo();
-	document.querySelector('.loading').style.opacity = 0;
-	setTimeout(function () {
-		document.querySelector('.loading').style.display = 'none';
-		document.querySelector('.home-logo').style.opacity = 1;
-		musicControl();
-	}, 500);
+
+
+window.onload = function () {
+	loadCss('css/style.css',function () {
+		var loading = document.querySelector('.loading');
+
+		loading.innerHTML = "<p>Bem-vindo</p>";
+		setTimeout(function () {
+			musicSinc();
+			menuControl();
+			parallaxLogo();
+			loading.style.opacity = 0;
+			setTimeout(function () {
+				loading.style.display = 'none';
+				document.querySelector('.home-logo').style.opacity = 1;
+				musicControl();
+			}, 500);
+		}, 1000);
+	});
 }
+
+
 
 window.onresize = function() {
 	canvasD();
 	parallaxLogo();
 }
 
+
+
 window.onscroll = function() {
 	parallaxLogo();
 
-	if (document.querySelector('.slogan').classList.contains('ini') && (scroll > (document.querySelector('.home').clientHeight + (document.querySelector('.slogan').clientHeight / 2) - (document.querySelector('.home-logo').clientHeight / 2) - parseInt(document.querySelector('.home-logo').style.top)))) {
-		document.querySelector('.slogan').classList.remove('ini');
+	var slogan = document.querySelector('.slogan');
+	var logo = document.querySelector('.home-logo');
+	if (
+		slogan.classList.contains('ini') && (
+			scroll > (
+				document.querySelector('.home').clientHeight +
+				(slogan.clientHeight / 2) -
+				(logo.clientHeight / 2) -
+				parseInt(logo.style.top) +
+				menuHeight
+			)
+		)
+	) {
+		slogan.classList.remove('ini');
 	}
 }
+
+
+
+function loadCss(url, callback) {
+	var css = document.createElement('link');
+    css.setAttribute('type', "text/css" );
+    css.setAttribute('rel', "stylesheet" );
+    css.setAttribute('href', url );
+	css.onload = callback;
+    document.getElementsByTagName("head").item(0).appendChild(css);
+}
+
 
 
 function menuControl() {
-	if (document.querySelector('.menu').classList.contains('on')) {
-		document.querySelector('.menu').classList.remove('on');
-
-		for (var i = 0; i < document.querySelector('.menu').getElementsByTagName('li').length; i++) {
-			(function (i) {
-				setTimeout(function () {
-					document.querySelector('.menu').getElementsByTagName('li')[i].style.top = '0px';
-				}, 200 * i);
-			})(i);
-		}
+	var master = document.querySelector('.master').classList;
+	var menuControl = document.querySelector('.menu-control > b');
+	var logoStyle = document.querySelector('.home-logo').style;
+	if (master.contains('on-menu')) {
+		master.remove('on-menu');
+		menuHeight = 0;
+		menuControl.innerHTML = '&#xf0c9;';
 	} else {
-		document.querySelector('.menu').classList.add('on');
-
-		for (var i = 0; i < document.querySelector('.menu').getElementsByTagName('li').length; i++) {
-			(function (i) {
-				setTimeout(function () {
-					document.querySelector('.menu').getElementsByTagName('li')[i].style.top = ((70 + 15) * (i + 1)) + 'px';
-				}, 200 * i);
-			})(i);
-		}
+		master.add('on-menu');
+		menuHeight = parseInt(document.querySelector('.menu-control').clientHeight);
+		menuControl.innerHTML = '&#xf00d;';
 	}
+	logoStyle.transition = 'top .5s';
+	parallaxLogo();
+	setTimeout(function () {
+		logoStyle.transition = '';
+	}, 500);
 }
+
 
 
 function musicSinc() {
@@ -64,15 +99,20 @@ function musicSinc() {
 }
 
 
+
 function musicControl() {
-	if (document.querySelector('.home-music').paused) {
-	 	document.querySelector('.home-music').play();
-	 	document.querySelector('.home-music-play').innerHTML =  "&#xf04c";
+	var music = document.querySelector('.home-music');
+	var musicControl = document.querySelector('.home-music-control b');
+
+	if (music.paused) {
+	 	music.play();
+	 	musicControl.innerHTML =  "&#xf04c";
     } else {
-    	document.querySelector('.home-music').pause();
-	 	document.querySelector('.home-music-play').innerHTML =  "&#xf04b";
+    	music.pause();
+	 	musicControl.innerHTML =  "&#xf04b";
     }
 }
+
 
 
 function canvasD() {
@@ -84,21 +124,27 @@ function canvasD() {
 	barSpace = widthEnd / (analyser.frequencyBinCount * 2);
 }
 
+
+
 function parallaxLogo() {
 	scroll = window.pageYOffset;
+	var home = document.querySelector('.home');
+	var logo = document.querySelector('.home-logo');
 
 	parallax(
-		(document.querySelector('.home').clientHeight / 2) - (document.querySelector('.home-logo').clientHeight / 2),
-		document.querySelector('.home').clientHeight,
+		(home.clientHeight / 2) - (logo.clientHeight / 2) + menuHeight,
+		home.clientHeight + menuHeight,
 		"tl",
-		document.querySelector('.home-logo'),
-		(document.querySelector('.home').clientWidth / 2) - (document.querySelector('.home-logo').clientWidth / 2),
-		(document.querySelector('.home').clientHeight / 2) - (document.querySelector('.home-logo').clientHeight / 2),
-		(document.querySelector('.home').clientWidth / 2) - (document.querySelector('.home-logo').clientWidth / 2),
-		(window.innerHeight / 2) - (document.querySelector('.home-logo').clientHeight / 2),
+		logo,
+		(homeBg.clientWidth / 2) - (logo.clientWidth / 2),
+		(home.clientHeight / 2) - (logo.clientHeight / 2) + menuHeight,
+		(home.clientWidth / 2) - (logo.clientWidth / 2),
+		(window.innerHeight / 2) - (logo.clientHeight / 2) + menuHeight,
 		"px"
 	);
 }
+
+
 
 function funcAnimation() {
 	requestAnimationFrame(funcAnimation);
@@ -136,6 +182,8 @@ function funcAnimation() {
 	homeBg.getContext('2d').lineTo(widthCenter, heightEnd);
 	homeBg.getContext('2d').fill();
 }
+
+
 
 function parallax(iniP,endP,type,div,iniX,iniY,endX,endY,un,unY=un) {
 

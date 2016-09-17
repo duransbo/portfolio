@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 	<head>
 		<meta charset="utf-8" />
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width">
 		<title>Portfolio</title>
 		<link href="css/base.css" rel="stylesheet" type="text/css">
-		<link href="css/style.css" rel="stylesheet" type="text/css">
 		<link rel="shortcut icon" href="graphic/image/logo.ico" type="image/x-icon">
 		<style type="text/css">
 			/* LOADING */
@@ -21,48 +24,64 @@
 			}
 		</style>
 	</head>
-	<body>
+
+
+
+	<body class="master on-menu">
 
 		<div class="loading">
 			<p>Carregando</p>
 		</div>
 
 
+
 		<div class="menu">
+
 			<div class="menu-control"><b class="icon">&#xf0c9;</b></div>
+
 			<nav>
 				<ul>
-					<li><b class="icon">&#xf015;</b></li>
-					<li><b class="icon">&#xf007;</b></li>
-					<li><b class="icon">&#xf19d;</b></li>
-					<li><b class="icon">&#xf121;</b></li>
-					<li><b class="icon">&#xf086;</b></li>
+					<li class="menu-link"><b class="icon">&#xf015;</b></li>
+					<li class="menu-link"><b class="icon">&#xf007;</b></li>
+					<li class="menu-link"><b class="icon">&#xf19d;</b></li>
+					<li class="menu-link"><b class="icon">&#xf121;</b></li>
+					<li class="menu-link"><b class="icon">&#xf086;</b></li>
 				</ul>
 			</nav>
+
 		</div>
 
 
-		<div class="home">
-			<div class="home-logo">
-				<img src="graphic/image/logo_white.png">
+
+		<div class="viewer">
+
+			<div class="home">
+				<div class="home-logo">
+					<img src="graphic/image/logo_white.png">
+				</div>
+				<div class="home-music-control">
+					<p><b class="icon">&#xf04b;</b> AWOLNATION - Sail</p>
+				</div>
+				<audio class="home-music">
+					<source src="graphic/audio/audio.mp3">
+				</audio>
+				<canvas width="0" height="0" class="home-bg"></canvas>
 			</div>
-			<div class="home-music-control">
-				<p><b class="home-music-play icon">&#xf04b;</b> AWOLNATION - Sail</p>
-			</div>
-			<audio class="home-music" muted>
-				<source src="graphic/audio/audio.mp3">
-			</audio>
-			<canvas width="0" height="0" class="home-bg"></canvas>
-		</div>
 
 
-		<div class="slogan ini">
-			<p><b class="icon">&#xf063;</b> Role para baixo <b class="icon">&#xf063;</b></p>
-			<p>Para mudar o mundo, entenda o código-fonte.</p>
+			<div class="slogan ini">
+				<p><b class="icon">&#xf063;</b> Role para baixo <b class="icon">&#xf063;</b></p>
+				<p>Para mudar o mundo, entenda o código-fonte.</p>
+			</div>
+
+
+			<div class="view"></div>
+
 		</div>
 
 
 		<script src="js/script.js" type="text/javascript"></script>
 
 	</body>
+
 </html>
