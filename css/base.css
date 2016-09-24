@@ -1,7 +1,7 @@
 /* ALL TAG */
 *,
 *:before,
-*:after{
+*:after {
 	margin: 0;
 	box-sizing: border-box;
 	border-width: 0;
@@ -34,20 +34,20 @@ footer,
 main,
 section,
 article,
-aside{
+aside {
 	width: 100%;
 	display: flex;
 	flex-wrap: wrap;
 	align-items: flex-start;
 	align-content: flex-start;
 }
-html{
+html {
 	overflow-y: scroll;
 	font-family: "Trebuchet MS";
 	font-size: 10px;
 	font-weight: normal;
 }
-main{
+main {
 	display: block;
 }
 
@@ -62,33 +62,33 @@ h3,
 h4,
 h5,
 h6,
-span{
+span {
 	font-weight: bold;
 }
-h1{
+h1 {
 	font-size: 4.0rem;
 }
-h2{
+h2 {
 	font-size: 3.5rem;
 }
 h3,
 caption,
-legend{
+legend {
 	font-size: 3.0rem;
 }
-h4{
+h4 {
 	font-size: 2.5rem;
 }
-h5{
+h5 {
 	font-size: 2.0rem;
 }
-h6{
+h6 {
 	font-size: 1.5rem;
 }
-dfn{
+dfn {
 	font-style: normal;
 }
-a{
+a {
 	color: inherit;
 	text-decoration: none;
 }
@@ -101,7 +101,7 @@ input[type=button],
 input[type=file],
 input[type=reset],
 input[type=submit],
-button{
+button {
 	width: 150px;
 	height: 50px;
 	cursor: pointer;
@@ -119,7 +119,7 @@ input[type=search],
 input[type=text],
 input[type=time],
 input[type=url],
-select{
+select {
 	height: 20px;
 }
 input[type=color],
@@ -139,52 +139,52 @@ input[type=text],
 input[type=time],
 input[type=url],
 select,
-textarea{
+textarea {
 	width: 250px;
 	float: left;
 	outline: none;
 }
-textarea{
+textarea {
 	height: 100px;
 }
 
 /* STRUCTURE CLASS */
-.flex{
+.flex {
 	display: flex;
 }
-.x-center{
+.x-center {
 	justify-content: center;
 }
-.y-center{
+.y-center {
 	align-items: center;
 }
-.auto{
+.auto {
 	width: auto;
 }
-.view{
+.view {
 	height: 100vh;
 }
-.full{
+.full {
 	height: inherit;
 }
-.scroll{
+.scroll {
 	overflow: auto;
 }
-.hide{
+.hide {
 	overflow: hidden;
 }
-.clear{
+.clear {
 	float: none;
 	clear: both;
 }
 
 /* ICON CLASS */
-@font-face{
+@font-face {
 	font-family: 'FontAwesome';
 	src: url('../graphic/font/fontawesome-webfont.eot?v=4.3.0');
 	src: url('../graphic/font/fontawesome-webfont.eot?#iefix&v=4.3.0') format('embedded-opentype'), url('../graphic/font/fontawesome-webfont.woff2?v=4.3.0') format('woff2'), url('../graphic/font/fontawesome-webfont.woff?v=4.3.0') format('woff'), url('../graphic/font/fontawesome-webfont.ttf?v=4.3.0') format('truetype'), url('../graphic/font/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular') format('svg');
 }
-.icon{
+.icon {
 	font-family: 'FontAwesome';
 	text-align: center;
 }
