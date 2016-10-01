@@ -63,7 +63,7 @@ var ClassMusic = function () {
 		var	frecColorLim = 8;
 		var i;
 		var canvas = bg.getContext('2d');
-		var grd = canvas.createLinearGradient(0, heightEnd, 0, 0);
+		var grd = canvas.createLinearGradient(0, heightEnd - 10, 0, heightEnd - 255);
 
 
 		requestAnimationFrame(self.animation);
@@ -75,8 +75,8 @@ var ClassMusic = function () {
 		canvas.clearRect(0, 0, widthEnd, heightEnd);
 		canvas.fillStyle = 'rgba(' + parseInt(frecArray[frecColor] / frecColorLim) + ',' + parseInt((frecArray[frecColor] / frecColorLim) * (32 / 21)) + ',' + parseInt((frecArray[frecColor] / frecColorLim) * (54 / 21)) + ',' + (1 - (frecArray[frecColor] / 500)) + ')';
 		canvas.fillRect(0, 0, widthEnd, heightEnd);
-		grd.addColorStop(0,'rgb(241, 228, 222)');
-		grd.addColorStop(1,'transparent');
+		grd.addColorStop(0,'rgba(241, 228, 222, 1)');
+		grd.addColorStop(1,'rgba(241, 228, 222, 0)');
 		canvas.fillStyle = grd;
 		canvas.beginPath();
 		canvas.moveTo(widthCenter, heightEnd - frecArray[0]);
@@ -250,6 +250,7 @@ window.onscroll = function () {
 	var home = getElement('.home');
 	var logo = getElement('.home-logo');
 	var slogan = getElement('.slogan');
+	var about = getElement('.about');
 
 	if (
 		slogan.classList.contains('ini') && (
@@ -264,9 +265,9 @@ window.onscroll = function () {
 	) {
 		slogan.classList.remove('ini');
 	}
-	if (!menu.classList.contains('invert') && (scroll > home.clientHeight - (menu.clientHeight / 2))) {
+	if (!menu.classList.contains('invert') && (scroll > home.clientHeight - (menu.clientHeight / 2)) && (scroll <= home.clientHeight + about.clientHeight + (slogan.clientHeight * 2) - (menu.clientHeight / 2))) {
 		menu.classList.add('invert');
-	} else if (menu.classList.contains('invert') && (scroll <= home.clientHeight - (menu.clientHeight / 2))) {
+	} else if (menu.classList.contains('invert') && ((scroll <= home.clientHeight - (menu.clientHeight / 2)) || (scroll > home.clientHeight + about.clientHeight + (slogan.clientHeight * 2) - (menu.clientHeight / 2)))) {
 		menu.classList.remove('invert');
 	}
 }

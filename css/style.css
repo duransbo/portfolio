@@ -66,6 +66,7 @@ body {
 	font-family: 'Roboto';
 	font-size: 1.8rem;
 	font-weight: 600;
+	color: #111;
 	letter-spacing: 0.2rem;
 }
 b {
@@ -261,14 +262,9 @@ p{
 .experience {
 	min-height: 100vh;
 	padding: 100px 20%;
-	background-color: rgba(255, 255, 255, .9);
+	background-color: rgba(20, 20, 35, .9);
+	color: #fff;
 	align-content: center;
-}
-.experience h2 {
-	margin: 50px 0 0 0;
-}
-.experience li {
-	margin: 30px 0 0 15px;
 }
 /* !EXPERIENCE */
 
@@ -287,7 +283,19 @@ p{
 
 
 /* QUERIES */
-@media screen and (min-width: 600px) {
+@media screen and (max-width: 729px) {
+	.experience h2 {
+		margin: 50px 0 0 0;
+	}
+	.experience li {
+		margin-top: 30px;
+		margin-left: 20px;
+	}
+}
+
+
+
+@media screen and (min-width: 730px) {
 	:root {
 		--menu-lenght: 70px;
 	}
@@ -305,6 +313,70 @@ p{
 
 	.slogan {
 		font-size: 3.5rem;
+	}
+
+
+	.trajetoria {
+		--uni: 15px;
+
+		margin: 50px 0 0 0;
+		flex-wrap: nowrap;
+		align-items: stretch;
+	}
+	.trajetoria li{
+		margin-left: 0;
+		align-items: center;
+	}
+	.trajetoria li:before {
+		content: '';
+		width: 5px;
+		height: 100%;
+		border-color: darkorange;
+		position: absolute;
+	}
+	.trajetoria b{
+		width: 100%;
+	}
+	.trajetoria-academica {
+		padding: 0 20px 0 0;
+		text-align: right;
+		justify-content: center;
+	}
+	.trajetoria-academica li:before {
+		border-width: 2px 0 2px 2px;
+		right: -15px;
+	}
+	.trajetoria-profissional {
+		padding: 0 0 0 20px;
+		justify-content: center;
+	}
+	.trajetoria-profissional li:before {
+		border-width: 2px 2px 2px 0;
+		left: -15px;
+	}
+	.ensino-fundamental {
+		margin-top: calc(var(--uni) * 1);
+		height: calc(var(--uni) * 24);
+	}
+	.ensino-medio {
+		margin-top: calc(var(--uni) * 1);
+		height: calc(var(--uni) * 38);
+	}
+	.ensino-superior {
+		margin-top: calc(var(--uni) * 1);
+		height: calc(var(--uni) * 10);
+	}
+	.web-design {
+		margin-top: calc(var(--uni) * 7);
+		height: calc(var(--uni) * 24);
+	}
+	.agencia-zum {
+		margin-top: calc(var(--uni) * 4);
+		height: calc(var(--uni) * 33);
+	}
+	.procurando-emprego {
+		margin-top: calc(var(--uni) * 2);
+		height: calc(var(--uni) * 5);
 	}
 }
 
