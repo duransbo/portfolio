@@ -1,3 +1,61 @@
+/* FONTS */
+@font-face {
+	font-family: 'Roboto';
+	src: url('../graphic/font/Roboto-Regular.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Roboto';
+	src: url('../graphic/font/Roboto-Italic.ttf');
+	font-weight: normal;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'Roboto';
+	src: url('../graphic/font/Roboto-Light.ttf');
+	font-weight: 300;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Roboto';
+	src: url('../graphic/font/Roboto-LightItalic.ttf');
+	font-weight: 300;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'Roboto';
+	src: url('../graphic/font/Roboto-Medium.ttf');
+	font-weight: 600;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Roboto';
+	src: url('../graphic/font/Roboto-MediumItalic.ttf');
+	font-weight: 600;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'Roboto';
+	src: url('../graphic/font/Roboto-Bold.ttf');
+	font-weight: 900;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Roboto';
+	src: url('../graphic/font/Roboto-BoldItalic.ttf');
+	font-weight: 900;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'FontAwesome';
+	src: url('../graphic/font/fontawesome-webfont.eot?v=4.3.0');
+	src: url('../graphic/font/fontawesome-webfont.eot?#iefix&v=4.3.0') format('embedded-opentype'), url('../graphic/font/fontawesome-webfont.woff2?v=4.3.0') format('woff2'), url('../graphic/font/fontawesome-webfont.woff?v=4.3.0') format('woff'), url('../graphic/font/fontawesome-webfont.ttf?v=4.3.0') format('truetype'), url('../graphic/font/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular') format('svg');
+}
+/* !FONTS */
+
+
+
 /* ROOT */
 :root {
 	--menu-lenght: calc((100vw - 20px) / 6);
@@ -5,7 +63,9 @@
 	--slogan-height: calc(var(--logo-height) + 60px);
 }
 body {
-	font-size: 1.5rem;
+	font-family: 'Roboto';
+	font-size: 1.8rem;
+	font-weight: 600;
 	letter-spacing: 0.2rem;
 }
 b {
@@ -15,10 +75,41 @@ img {
 	max-width: 100%;
 	max-height: 100%;
 }
+p{
+	margin: 30px 0 0 0;
+}
+.icon {
+	font-family: 'FontAwesome';
+	text-align: center;
+}
+/* ROOT */
 
 
 
-/* VIEWER */
+/* HEADER */
+.master > header {
+	height: var(--menu-lenght);
+	padding: 0 20px;
+	z-index: 2;
+	position: absolute;
+	top: 0;
+	color: rgba(255, 255, 255, .5);
+	text-shadow: 1px 1px 10px #000;
+	justify-content: center;
+	align-items: center;
+	transition: top .5s;
+}
+.master > header h1 {
+	font-size: var(--font);
+}
+.on-menu > header {
+	top: var(--menu-lenght);
+}
+/* !HEADER */
+
+
+
+/* PAGES */
 .pages {
 	top: 0;
 	transition: top .5s;
@@ -26,6 +117,7 @@ img {
 .on-menu .pages {
 	top: var(--menu-lenght);
 }
+/* !PAGES */
 
 
 
@@ -55,12 +147,16 @@ img {
 	align-items: center;
 	transition: all .5s;
 }
+.menu-control.invert {
+	color: #111;
+}
 .on-menu .menu{
 	height: var(--menu-lenght);
 }
 .on-menu .menu-control{
 	color: #fff !important;
 }
+/* !MENU */
 
 
 
@@ -86,6 +182,7 @@ img {
 	border-radius: 20px;
 	padding: 10px 20px;
 	background-color: rgba(10, 10, 10, .9);
+	font-size: 1.5rem;
 	color: #fff;
 	align-self: flex-end;
 }
@@ -104,40 +201,76 @@ img {
 	background-color: rgba(10, 10, 10, .9);
 	transition: opacity 1s;
 }
+/* !HOME */
 
 
 
 /* SLOGAN */
 .slogan {
-	height: var(--slogan-height);
-	box-shadow: 0px -5px 5px rgb(241, 228, 222);
+	min-height: var(--slogan-height);
+	padding: 50px 20%;
 	background-color: rgba(241, 228, 222, .9);
 	font-size: 2.5rem;
 	font-weight: bold;
 	text-align: center;
 	flex-wrap: nowrap;
-	justify-content: center;
 	align-items: center;
+	justify-content: center;
 }
-.slogan p {
-	position: absolute;
+.slogan i {
 	transition: all 1s;
 }
-.slogan p:first-child {
+.slogan i.scroll {
+	position: absolute;
 	margin-top: 50px;
 	opacity: 0;
 }
-.slogan.ini p:first-child {
+.slogan.ini i {
+	margin-top: 50px;
+	opacity: 0;
+}
+.slogan.ini i.scroll {
 	margin-top: 0;
 	opacity: 1;
 }
-.slogan.ini p:first-child b {
+.slogan.ini i.scroll b {
     animation: opacity 1.5s linear infinite alternate;
 }
-.slogan.ini p:last-child {
-	margin-top: 50px;
-	opacity: 0;
+/* SLOGAN */
+
+
+
+/* ABOUT */
+.about {
+	min-height: 100vh;
+	padding: 100px 20%;
+	background-color: rgba(255, 255, 255, .9);
+	align-content: center;
 }
+.about a {
+	color: darkorange;
+}
+.about a:hover {
+	color: orange;
+}
+/* ABOUT */
+
+
+
+/* EXPERIENCE */
+.experience {
+	min-height: 100vh;
+	padding: 100px 20%;
+	background-color: rgba(255, 255, 255, .9);
+	align-content: center;
+}
+.experience h2 {
+	margin: 50px 0 0 0;
+}
+.experience li {
+	margin: 30px 0 0 15px;
+}
+/* !EXPERIENCE */
 
 
 
@@ -149,6 +282,7 @@ img {
     	opacity: 1;
     }
 }
+/* !ANIMATIONS */
 
 
 
@@ -156,6 +290,11 @@ img {
 @media screen and (min-width: 600px) {
 	:root {
 		--menu-lenght: 70px;
+	}
+
+
+	.master > header {
+		justify-content: flex-end;
 	}
 
 
@@ -176,5 +315,7 @@ img {
 	.menu-link:hover {
 		box-shadow: 0px 0px 5px #111;
 		background-color: orange;
+		color: #fff !important;
 	}
 }
+/* QUERIES */

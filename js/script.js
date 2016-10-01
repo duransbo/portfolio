@@ -1,59 +1,129 @@
-getElement('.menu-control').addEventListener("click", menuControl);
-getElement('.home-music-control b').addEventListener("click", musicControl);
+/* CLASSES  */
+var ClassMusic = function () {
+
+	var self = this;
+	var home = getElement('.home');
+	var music = getElement('.home-music');
+	var playButton = getElement('.home-music-control b');
+	var bg;
+	var widthEnd;
+	var heightEnd;
+	var widthCenter;
+	var barSpace;
+	var analyser;
 
 
 
-window.onload = function () {
-	loadCss('css/base.css');
-	loadCss('css/style.css', function () {
-		var loading = getElement('.loading');
+	self.create = function () {
 
-		loading.innerHTML = "<p>Bem-vindo</p>";
-		musicSinc();
-		menuControl();
-		setTimeout(function () {
-			loading.style.opacity = 0;
-			setTimeout(function () {
-				loading.style.display = 'none';
-				getElement('.home-logo').style.opacity = 1;
-				musicControl();
-			}, 500);
-		}, 500);
-	});
-}
+		var canvas = document.createElement('canvas');
+
+		canvas.setAttribute('class', 'home-bg');
+		home.appendChild(canvas);
+		bg = getElement('.home-bg');
+
+		self.sinc();
+
+	};
 
 
 
-window.onresize = function () {
-	canvasD();
-	parallaxLogo();
-}
+	self.sizing = function () {
+		bg.width = home.clientWidth;
+		bg.height = home.clientHeight;
+		widthEnd = bg.width;
+		heightEnd = bg.height;
+		widthCenter = widthEnd / 2;
+		barSpace = widthEnd / (analyser.frequencyBinCount * 2);
+	};
 
 
 
-window.onscroll = function () {
-	parallaxLogo();
+	self.sinc = function () {
 
-	var slogan = getElement('.slogan');
-	var logo = getElement('.home-logo');
-	if (
-		slogan.classList.contains('ini') && (
-			scroll > (
-				getElement('.home').clientHeight +
-				(slogan.clientHeight / 2) -
-				(logo.clientHeight / 2) -
-				parseInt(logo.style.top) +
-				menuHeight
-			)
-		)
-	) {
-		slogan.classList.remove('ini');
-	}
-}
+		var context = new AudioContext();
+		var source = context.createMediaElementSource(music);
+
+		analyser = context.createAnalyser();
+		source.connect(analyser);
+		analyser.connect(context.destination);
+		frecArray = new Uint8Array(analyser.frequencyBinCount);
+
+		self.sizing();
+		self.animation();
+
+	};
 
 
 
-function loadCss(url, callback = function () {}) {
+	self.animation = function () {
+
+		var	frecInterval = 8;
+		var	frecColor = 0;
+		var	frecColorLim = 8;
+		var i;
+		var canvas = bg.getContext('2d');
+		var grd = canvas.createLinearGradient(0, heightEnd, 0, 0);
+
+
+		requestAnimationFrame(self.animation);
+
+
+		analyser.getByteFrequencyData(frecArray);
+
+
+		canvas.clearRect(0, 0, widthEnd, heightEnd);
+		canvas.fillStyle = 'rgba(' + parseInt(frecArray[frecColor] / frecColorLim) + ',' + parseInt((frecArray[frecColor] / frecColorLim) * (32 / 21)) + ',' + parseInt((frecArray[frecColor] / frecColorLim) * (54 / 21)) + ',' + (1 - (frecArray[frecColor] / 500)) + ')';
+		canvas.fillRect(0, 0, widthEnd, heightEnd);
+		grd.addColorStop(0,'rgb(241, 228, 222)');
+		grd.addColorStop(1,'transparent');
+		canvas.fillStyle = grd;
+		canvas.beginPath();
+		canvas.moveTo(widthCenter, heightEnd - frecArray[0]);
+		for (i = 1; i < analyser.frequencyBinCount; i += frecInterval) {
+			canvas.quadraticCurveTo(
+				widthCenter + ((i - (frecInterval / 2)) * barSpace),
+				heightEnd - frecArray[i] - ((frecArray[i - frecInterval] - frecArray[i]) / 2),
+				widthCenter + (i * barSpace),
+				heightEnd - frecArray[i]
+			);
+		}
+		canvas.lineTo(widthCenter + i, heightEnd);
+		canvas.lineTo(widthCenter, heightEnd);
+		canvas.moveTo(widthCenter, heightEnd - frecArray[0]);
+		for (i = 1; i < analyser.frequencyBinCount; i += frecInterval) {
+			canvas.quadraticCurveTo(
+				widthCenter - ((i - (frecInterval / 2)) * barSpace),
+				heightEnd - frecArray[i] - ((frecArray[i - frecInterval] - frecArray[i]) / 2),
+				widthCenter - (i * barSpace),
+				heightEnd - frecArray[i]
+			);
+		}
+		canvas.lineTo(widthCenter - i, heightEnd);
+		canvas.lineTo(widthCenter, heightEnd);
+		canvas.fill();
+
+	};
+
+
+
+	self.play = function () {
+		if (music.paused) {
+		 	music.play();
+		 	playButton.innerHTML =  "&#xf04c";
+	    } else {
+	    	music.pause();
+		 	playButton.innerHTML =  "&#xf04b";
+	    }
+	};
+
+};
+/* !CLASSES */
+
+
+
+/* FUNCTIONS */
+var loadCss = function (url, callback = function () {}) {
 	var css = document.createElement('link');
     css.setAttribute('type', "text/css" );
     css.setAttribute('rel', "stylesheet" );
@@ -64,19 +134,18 @@ function loadCss(url, callback = function () {}) {
 
 
 
-function menuControl() {
+var getElement = function (id) {
+	return document.querySelector(id);
+}
+
+
+
+var menuControl = function () {
 	var master = getElement('.master').classList;
 	var menuControl = getElement('.menu-control > b');
 	var logoStyle = getElement('.home-logo').style;
-	if (master.contains('on-menu')) {
-		master.remove('on-menu');
-		menuHeight = 0;
-		menuControl.innerHTML = '&#xf0c9;';
-	} else {
-		master.add('on-menu');
-		menuHeight = parseInt(getElement('.menu-control').clientHeight);
-		menuControl.innerHTML = '&#xf00d;';
-	}
+	master.toggle('on-menu');
+	menuControl.innerHTML = master.contains('on-menu') ? '&#xf00d;' : '&#xf0c9;';
 	logoStyle.transition = 'top .5s';
 	parallaxLogo();
 	setTimeout(function () {
@@ -86,48 +155,9 @@ function menuControl() {
 
 
 
-function musicSinc() {
-	context = new AudioContext();
-	analyser = context.createAnalyser();
-	source = context.createMediaElementSource(getElement('.home-music'));
-	source.connect(analyser);
-	analyser.connect(context.destination);
-	frec_array = new Uint8Array(analyser.frequencyBinCount);
-	homeBg = getElement('.home-bg');
-	canvasD();
-	funcAnimation();
-}
-
-
-
-function musicControl() {
-	var music = getElement('.home-music');
-	var musicControl = getElement('.home-music-control b');
-
-	if (music.paused) {
-	 	music.play();
-	 	musicControl.innerHTML =  "&#xf04c";
-    } else {
-    	music.pause();
-	 	musicControl.innerHTML =  "&#xf04b";
-    }
-}
-
-
-
-function canvasD() {
-	homeBg.width = getElement('.home').clientWidth;
-	homeBg.height = getElement('.home').clientHeight;
-	widthEnd = homeBg.width;
-	heightEnd = homeBg.height;
-	widthCenter = widthEnd / 2;
-	barSpace = widthEnd / (analyser.frequencyBinCount * 2);
-}
-
-
-
-function parallaxLogo() {
+var parallaxLogo = function () {
 	scroll = window.pageYOffset;
+	menuHeight = getElement('.master').classList.contains('on-menu') ? 50 : 0;
 	var home = getElement('.home');
 	var logo = getElement('.home-logo');
 
@@ -136,7 +166,7 @@ function parallaxLogo() {
 		home.clientHeight + menuHeight,
 		"tl",
 		logo,
-		(homeBg.clientWidth / 2) - (logo.clientWidth / 2),
+		(home.clientWidth / 2) - (logo.clientWidth / 2),
 		(home.clientHeight / 2) - (logo.clientHeight / 2) + menuHeight,
 		(home.clientWidth / 2) - (logo.clientWidth / 2),
 		(window.innerHeight / 2) - (logo.clientHeight / 2) + menuHeight,
@@ -146,47 +176,7 @@ function parallaxLogo() {
 
 
 
-function funcAnimation() {
-	requestAnimationFrame(funcAnimation);
-
-	analyser.getByteFrequencyData(frec_array);
-	barInterval = 8;
-	f = 0;
-	d = 8;
-	canvasCtx = homeBg.getContext('2d');
-	canvasCtx.clearRect(0,0,widthEnd,heightEnd);
-	canvasCtx.fillStyle = 'rgba(' + parseInt(frec_array[f] / d) + ',' + parseInt((frec_array[f] / d) * (32 / 21)) + ',' + parseInt((frec_array[f] / d) * (54 / 21)) + ',' + (1 - (frec_array[f] / 500)) + ')';
-	canvasCtx.fillRect(0, 0, widthEnd, heightEnd);
-	canvasCtx.fillStyle = 'rgb(241, 228, 222)';
-	canvasCtx.beginPath();
-	canvasCtx.moveTo(widthCenter, heightEnd - frec_array[0]);
-	for (i = 1; i < analyser.frequencyBinCount; i += barInterval) {
-		canvasCtx.quadraticCurveTo(
-			widthCenter + ((i - (barInterval / 2)) * barSpace),
-			heightEnd - frec_array[i] - ((frec_array[i - barInterval] - frec_array[i]) / 2),
-			widthCenter + (i * barSpace),
-			heightEnd - frec_array[i]
-		);
-	}
-	canvasCtx.lineTo(widthCenter + i, heightEnd);
-	canvasCtx.lineTo(widthCenter, heightEnd);
-	canvasCtx.moveTo(widthCenter, heightEnd - frec_array[0]);
-	for (i = 1; i < analyser.frequencyBinCount; i += barInterval) {
-		canvasCtx.quadraticCurveTo(
-			widthCenter - ((i - (barInterval / 2)) * barSpace),
-			heightEnd - frec_array[i] - ((frec_array[i - barInterval] - frec_array[i]) / 2),
-			widthCenter - (i * barSpace),
-			heightEnd - frec_array[i]
-		);
-	}
-	canvasCtx.lineTo(widthCenter - i, heightEnd);
-	canvasCtx.lineTo(widthCenter, heightEnd);
-	canvasCtx.fill();
-}
-
-
-
-function parallax(iniP,endP,type,div,iniX,iniY,endX,endY,un,unY=un) {
+var parallax = function (iniP,endP,type,div,iniX,iniY,endX,endY,un,unY=un) {
 
 	if ((scroll >= iniP) && (scroll <= endP)) {
 		move = ((scroll - iniP) * 100) / (endP - iniP);
@@ -215,9 +205,76 @@ function parallax(iniP,endP,type,div,iniX,iniY,endX,endY,un,unY=un) {
 			break;
 	}
 }
+/* !FUNCTIONS */
 
 
 
-function getElement(id) {
-	return document.querySelector(id);
+/* CODE */
+var objMusic = new ClassMusic();
+/* !CODE */
+
+
+
+/* WINDOW EVENTS */
+window.onload = function () {
+	loadCss('css/style.css', function () {
+		var loading = getElement('.loading');
+
+		loading.innerHTML = "<p>Bem-vindo</p>";
+		objMusic.create();
+		parallaxLogo();
+		setTimeout(function () {
+			loading.style.opacity = 0;
+			setTimeout(function () {
+				loading.style.display = 'none';
+				getElement('.home-logo').style.opacity = 1;
+				objMusic.play();
+			}, 500);
+		}, 500);
+	});
 }
+
+
+
+window.onresize = function () {
+	objMusic.sizing();
+	parallaxLogo();
+}
+
+
+
+window.onscroll = function () {
+	parallaxLogo();
+
+	var menu = getElement('.menu-control');
+	var home = getElement('.home');
+	var logo = getElement('.home-logo');
+	var slogan = getElement('.slogan');
+
+	if (
+		slogan.classList.contains('ini') && (
+			scroll > (
+				home.clientHeight +
+				(slogan.clientHeight / 2) -
+				(logo.clientHeight / 2) -
+				parseInt(logo.style.top) +
+				menuHeight
+			)
+		)
+	) {
+		slogan.classList.remove('ini');
+	}
+	if (!menu.classList.contains('invert') && (scroll > home.clientHeight - (menu.clientHeight / 2))) {
+		menu.classList.add('invert');
+	} else if (menu.classList.contains('invert') && (scroll <= home.clientHeight - (menu.clientHeight / 2))) {
+		menu.classList.remove('invert');
+	}
+}
+/* !WINDOW EVENTS */
+
+
+
+/* ADD EVENTS */
+getElement('.menu-control').addEventListener("click", menuControl);
+getElement('.home-music-control b').addEventListener("click", objMusic.play);
+/* !ADD EVENTS */

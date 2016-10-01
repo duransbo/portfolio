@@ -14,6 +14,7 @@
 	background-repeat: no-repeat;
 	font-family: inherit;
 	font-size: inherit;
+	text-align: inherit;
 }
 
 
@@ -146,45 +147,4 @@ textarea {
 }
 textarea {
 	height: 100px;
-}
-
-/* STRUCTURE CLASS */
-.flex {
-	display: flex;
-}
-.x-center {
-	justify-content: center;
-}
-.y-center {
-	align-items: center;
-}
-.auto {
-	width: auto;
-}
-.view {
-	height: 100vh;
-}
-.full {
-	height: inherit;
-}
-.scroll {
-	overflow: auto;
-}
-.hide {
-	overflow: hidden;
-}
-.clear {
-	float: none;
-	clear: both;
-}
-
-/* ICON CLASS */
-@font-face {
-	font-family: 'FontAwesome';
-	src: url('../graphic/font/fontawesome-webfont.eot?v=4.3.0');
-	src: url('../graphic/font/fontawesome-webfont.eot?#iefix&v=4.3.0') format('embedded-opentype'), url('../graphic/font/fontawesome-webfont.woff2?v=4.3.0') format('woff2'), url('../graphic/font/fontawesome-webfont.woff?v=4.3.0') format('woff'), url('../graphic/font/fontawesome-webfont.ttf?v=4.3.0') format('truetype'), url('../graphic/font/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular') format('svg');
-}
-.icon {
-	font-family: 'FontAwesome';
-	text-align: center;
 }
