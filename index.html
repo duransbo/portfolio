@@ -9,6 +9,7 @@
 		<title>Portfolio</title>
 		<link href="graphic/image/logo.ico" rel="shortcut icon" type="image/x-icon">
 		<link href="css/base.css" rel="stylesheet" type="text/css">
+		<link href="css/style.css" rel="stylesheet" type="text/css">
 		<style type="text/css">
 			/* LOADING */
 			.loading {
@@ -32,19 +33,19 @@
 
 	<body class="master">
 
-		<!-- HEADER -->
-		<header>
-			<h1>Gustavo Duran Ferreira</h1>
-		</header>
-		<!-- !HEADER -->
-
-
-
 		<!-- LOADING -->
 		<div class="loading">
 			<p>Carregando</p>
 		</div>
 		<!-- !LOADING -->
+
+
+
+		<!-- HEADER -->
+		<header>
+			<h1>Gustavo Duran Ferreira</h1>
+		</header>
+		<!-- !HEADER -->
 
 
 
@@ -55,11 +56,11 @@
 
 			<nav>
 				<ul>
-					<li class="menu-link"><b class="icon">&#xf015;</b></li>
-					<li class="menu-link"><b class="icon">&#xf007;</b></li>
-					<li class="menu-link"><b class="icon">&#xf19d;</b></li>
-					<li class="menu-link"><b class="icon">&#xf121;</b></li>
-					<li class="menu-link"><b class="icon">&#xf086;</b></li>
+					<li class="menu-link"><a href="home" class="link-scroll"><b class="icon">&#xf015;</b></a></li>
+					<li class="menu-link"><a href="about" class="link-scroll"><b class="icon">&#xf007;</b></a></li>
+					<li class="menu-link"><a href="experience" class="link-scroll"><b class="icon">&#xf19d;</b></a></li>
+					<li class="menu-link"><a href="projects" class="link-scroll"><b class="icon">&#xf121;</b></a></li>
+					<li class="menu-link"><a href="contact" class="link-scroll"><b class="icon">&#xf086;</b></a></li>
 				</ul>
 			</nav>
 
@@ -72,7 +73,7 @@
 		<div class="pages">
 
 			<!-- HOME -->
-			<div class="home">
+			<div id="home" class="home">
 				<div class="home-logo">
 					<img src="graphic/image/logo_white.png">
 				</div>
@@ -88,14 +89,14 @@
 
 			<!-- SLOGAN -->
 			<div class="slogan ini">
-				<i>" Você é um 0 ou um 1? "</i>
+				<i>Você é um 0 ou um 1?</i>
 				<i class="scroll"><b class="icon">&#xf063;</b> Role para baixo <b class="icon">&#xf063;</b></i>
 			</div>
 			<!-- !SLOGAN -->
 
 
 			<!-- ABOUT -->
-			<section class="about">
+			<section id="about" class="about">
 				<header>
 					<h1>Quem é Gustavo?</h1>
 				</header>
@@ -104,7 +105,7 @@
 
 				<p>Meu nome é Gustavo Duran Ferreira, tenho 18 anos e sou apenas mais um humilde amante de programação.</p>
 
-				<p>O primeiro contato que tive com uma linguagem de programação foi aos 14 anos no ensino medio, aprendia PASCALZIM e ficava fascinado ao conseguir montar codigos de entrada e saida manupulando variaveis, era simplesmente magico. Ao fim do primeiro ano de ensino medio tive o meu primeiro ponto alto ao desenvolver <a href="#">esse "jogo"</a>.</p>
+				<p>O primeiro contato que tive com uma linguagem de programação foi aos 14 anos no ensino medio, aprendia PASCALZIM e ficava fascinado ao conseguir montar codigos de entrada e saida manupulando variaveis, era simplesmente magico. Ao fim do primeiro ano de ensino medio tive o meu primeiro pico de orgulho ao desenvolver <a href="#">esse "jogo"</a>.</p>
 
 				<p>Desde então, sempre procurei aprender cada vez mais sobre esse assunto tendo contato com outras linguagens como C, C#, Delphi, VB, Java, etc. Porém acabei tomando gosto mesmo pelas linguagens front-end.</p>
 
@@ -121,27 +122,63 @@
 
 
 			<!-- EXPERIENCE -->
-			<section class="experience">
+			<section id="experience" class="experience">
 				<header>
 					<h1>Trajetoria</h1>
 				</header>
 
 				<div class="trajetoria">
-					<div class="trajetoria-tipo trajetoria-academica">
+					<div class="trajetoria-academica">
 						<h2>Academica</h2>
 						<ul>
-							<li class="ensino-fundamental"><b><span>Ensino Fundamental</span><br> Saudades T-T<br> <i>jan 2012 - dez 2013</i></b></li>
-							<li class="ensino-medio"><b><span>Ensino Medio</span><br> Tecnico em Informatica<br> <i>jan 2013 - dez 2015</i></b></li>
-							<li class="ensino-superior"><b><span>Ensino Superior</span><br> Sistemas para Internet<br> <i>jan 2016 - atualmente</i></b></li>
+							<li class="ensino-fundamental">
+								<b>
+									<span>Ensino Fundamental</span><br>
+									Saudades T-T<br>
+									<i>jan 2012 - dez 2013</i>
+								</b>
+							</li>
+							<li class="ensino-medio">
+								<b>
+									<span>Ensino Medio</span><br>
+									Tecnico em Informatica<br>
+									<i>jan 2013 - dez 2015</i>
+								</b>
+							</li>
+							<li class="ensino-superior">
+								<b>
+									<span>Ensino Superior</span><br>
+									Tecnologo em Sistemas para Internet<br>
+									<i>jan 2016 - atualmente</i>
+								</b>
+							</li>
 						</ul>
 					</div>
 
-					<div class="trajetoria-tipo trajetoria-profissional">
+					<div class="trajetoria-profissional">
 						<h2>Profissional</h2>
 						<ul>
-							<li class="web-design"><b><span>Curso</span><br> Web Design<br> <i>jul 2012 - jun 2013</i></b></li>
-							<li class="agencia-zum"><b><span>Web Developer Jr</span><br> Agencia Zum<br> <i>set 2013 - mar 2016</i></b></li>
-							<li class="procurando-emprego"><b><span>Procurando</span><br> Emprego :D<br> <i>abr 2014 - atualmente</i></b></li>
+							<li class="web-design">
+								<b>
+									<span>Curso</span><br>
+									de Web Design<br>
+									<i>jul 2012 - jun 2013</i>
+								</b>
+							</li>
+							<li class="agencia-zum">
+								<b>
+									<span>Web Developer Jr</span><br>
+									em Agencia Zum<br>
+									<i>set 2013 - mar 2016</i>
+								</b>
+							</li>
+							<li class="procurando-emprego">
+								<b>
+									<span>Em Busca</span><br>
+									de Emprego :D<br>
+									<i>jun 2014 - atualmente</i>
+								</b>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -151,7 +188,29 @@
 
 			<!-- SLOGAN -->
 			<div class="slogan">
-				<i>Só é impossivel até alguem fazer.</i>
+				<i>Só é impossivel até ser feito por alguem.</i>
+			</div>
+			<!-- !SLOGAN -->
+
+
+			<!-- PROJECTS -->
+			<div id="projects" class="projects">
+				<header>
+					<h1>Projetos</h1>
+				</header>
+				<ul class="projects-list">
+					<li>Loadi/Reloadless</li>
+					<li>Templatz</li>
+					<li>Orchard</li>
+				</ul>
+				<p>Feitos com muito carinho. S2</p>
+			</div>
+			<!-- !PROJECTS -->
+
+
+			<!-- SLOGAN -->
+			<div class="slogan">
+				<i>Hello World!</i>
 			</div>
 			<!-- !SLOGAN -->
 

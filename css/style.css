@@ -1,61 +1,3 @@
-/* FONTS */
-@font-face {
-	font-family: 'Roboto';
-	src: url('../graphic/font/Roboto-Regular.ttf');
-	font-weight: normal;
-	font-style: normal;
-}
-@font-face {
-	font-family: 'Roboto';
-	src: url('../graphic/font/Roboto-Italic.ttf');
-	font-weight: normal;
-	font-style: italic;
-}
-@font-face {
-	font-family: 'Roboto';
-	src: url('../graphic/font/Roboto-Light.ttf');
-	font-weight: 300;
-	font-style: normal;
-}
-@font-face {
-	font-family: 'Roboto';
-	src: url('../graphic/font/Roboto-LightItalic.ttf');
-	font-weight: 300;
-	font-style: italic;
-}
-@font-face {
-	font-family: 'Roboto';
-	src: url('../graphic/font/Roboto-Medium.ttf');
-	font-weight: 600;
-	font-style: normal;
-}
-@font-face {
-	font-family: 'Roboto';
-	src: url('../graphic/font/Roboto-MediumItalic.ttf');
-	font-weight: 600;
-	font-style: italic;
-}
-@font-face {
-	font-family: 'Roboto';
-	src: url('../graphic/font/Roboto-Bold.ttf');
-	font-weight: 900;
-	font-style: normal;
-}
-@font-face {
-	font-family: 'Roboto';
-	src: url('../graphic/font/Roboto-BoldItalic.ttf');
-	font-weight: 900;
-	font-style: italic;
-}
-@font-face {
-	font-family: 'FontAwesome';
-	src: url('../graphic/font/fontawesome-webfont.eot?v=4.3.0');
-	src: url('../graphic/font/fontawesome-webfont.eot?#iefix&v=4.3.0') format('embedded-opentype'), url('../graphic/font/fontawesome-webfont.woff2?v=4.3.0') format('woff2'), url('../graphic/font/fontawesome-webfont.woff?v=4.3.0') format('woff'), url('../graphic/font/fontawesome-webfont.ttf?v=4.3.0') format('truetype'), url('../graphic/font/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular') format('svg');
-}
-/* !FONTS */
-
-
-
 /* ROOT */
 :root {
 	--menu-lenght: calc((100vw - 20px) / 6);
@@ -83,25 +25,24 @@ p{
 	font-family: 'FontAwesome';
 	text-align: center;
 }
-/* ROOT */
+/* !ROOT */
 
 
 
 /* HEADER */
 .master > header {
 	height: var(--menu-lenght);
-	padding: 0 20px;
+	padding: 0 25px 0 0;
 	z-index: 2;
 	position: absolute;
 	top: 0;
-	color: rgba(255, 255, 255, .5);
-	text-shadow: 1px 1px 10px #000;
+	color: #fff;
 	justify-content: center;
 	align-items: center;
 	transition: top .5s;
 }
 .master > header h1 {
-	font-size: var(--font);
+	font-size: 1.8rem;
 }
 .on-menu > header {
 	top: var(--menu-lenght);
@@ -136,20 +77,25 @@ p{
 }
 .menu-control {
 	height: var(--menu-lenght);
+	cursor: pointer;
+	justify-content: center;
+	align-items: center;
 }
 .menu-control,
 .menu-link {
 	width: var(--menu-lenght);
-	cursor: pointer;
 	overflow: hidden;
-	font-size: 1.8rem;
 	color: #fff;
-	justify-content: center;
-	align-items: center;
 	transition: all .5s;
 }
 .menu-control.invert {
 	color: #111;
+}
+.menu-link a {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 .on-menu .menu{
 	height: var(--menu-lenght);
@@ -173,7 +119,6 @@ p{
 	position: absolute;
 	top: 0;
 	left: 0;
-	background-image: url('../graphic/image/bg.png');
 	background-attachment: fixed;
 	background-position: -100px;
 }
@@ -235,7 +180,7 @@ p{
 	opacity: 1;
 }
 .slogan.ini i.scroll b {
-    animation: opacity 1.5s linear infinite alternate;
+	animation: opacity 1.5s linear infinite alternate;
 }
 /* SLOGAN */
 
@@ -250,9 +195,6 @@ p{
 }
 .about a {
 	color: darkorange;
-}
-.about a:hover {
-	color: orange;
 }
 /* ABOUT */
 
@@ -270,13 +212,39 @@ p{
 
 
 
+/* PROJECTS */
+.projects {
+	min-height: 100vh;
+	padding: 100px 0 50px;
+	background-color: rgba(255, 255, 255, .9);
+	justify-content: center;
+	align-content: center;
+}
+.projects > header {
+	padding: 0 20%;
+}
+.projects-list {
+	margin: 30px 0;
+}
+.projects-list li {
+	min-height: 100vh;
+	box-shadow: 0px 0px 10px #000 inset;
+	background-color: rgba(100, 100, 100, .9);
+	color: #fff;
+	justify-content: center;
+	align-items: center;
+}
+/* !PROJECTS */
+
+
+
 /* ANIMATIONS */
 @keyframes opacity {
-    from {
-    	opacity: 0;
-    } to {
-    	opacity: 1;
-    }
+	from {
+		opacity: 0;
+	} to {
+		opacity: 1;
+	}
 }
 /* !ANIMATIONS */
 
@@ -309,10 +277,18 @@ p{
 	.home-music-control {
 		margin: 0 0 25px 10px;
 	}
+	.home-music-control:hover b {
+		color: orange;
+	}
 
 
 	.slogan {
 		font-size: 3.5rem;
+	}
+
+
+	.about a:hover {
+		color: orange;
 	}
 
 
@@ -375,8 +351,26 @@ p{
 		height: calc(var(--uni) * 33);
 	}
 	.procurando-emprego {
-		margin-top: calc(var(--uni) * 2);
-		height: calc(var(--uni) * 5);
+		margin-top: calc(var(--uni) * 3);
+		height: calc(var(--uni) * 4);
+	}
+
+
+	.projects-list {
+		min-height: calc(100vh - 270px);
+		flex-wrap: nowrap;
+		align-items: stretch;
+	}
+	.projects-list li {
+		width: auto;
+		min-height: 300px;
+		flex-grow: 1;
+		flex-basis: calc(100% / 4);
+		transition: all .5s;
+	}
+	.projects-list li:hover {
+		background-color: rgba(155, 155, 155, .9);
+		flex-grow: 2;
 	}
 }
 
