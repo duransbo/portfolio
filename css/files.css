@@ -57,7 +57,10 @@
 
 
 /* IMAGES */
-.home-bg {
+.home {
 	background-image: url('../graphic/image/bg.png');
+}
+.slogan {
+	background-image: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)), url('../graphic/image/bg_alpha.png');
 }
 /* IMAGES */

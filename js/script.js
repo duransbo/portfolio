@@ -1,57 +1,18 @@
 /* GENERIC FUNCTIONS */
-var getElement = function (id) {
-	return document.querySelector(id);
+var funcGetElement = function (prmId) {
+	return document.querySelector(prmId);
 };
 
 
 
-var addEvent = function (id, event, func) {
+var funcAddEvent = function (prmId, prmEvent, prmFunc) {
 
-	var elements = document.querySelectorAll(id);
+	var elements = document.querySelectorAll(prmId);
+	var i;
 
 	for (i = 0; i < elements.length; i++) {
-		elements[i].addEventListener(event, func);
+		elements[i].addEventListener(prmEvent, prmFunc);
 	}
-
-};
-
-
-
-var menuControl = function () {
-
-	var master = getElement('.master').classList;
-	var menuControl = getElement('.menu-control > b');
-	var logoStyle = getElement('.home-logo').style;
-
-	master.toggle('on-menu');
-	menuControl.innerHTML = master.contains('on-menu') ? '&#xf00d;' : '&#xf0c9;';
-	logoStyle.transition = 'top .5s';
-	parallaxLogo();
-	setTimeout(function () {
-		logoStyle.transition = '';
-	}, 500);
-
-};
-
-
-
-var parallaxLogo = function () {
-
-	var home = getElement('.home');
-	var logo = getElement('.home-logo');
-
-	menuHeight = getElement('.master').classList.contains('on-menu') ? 50 : 0;
-	objScroll.parallax(
-		(home.clientHeight / 2) - (logo.clientHeight / 2) + menuHeight,
-		home.clientHeight + menuHeight,
-		"tl",
-		logo,
-		(home.clientWidth / 2) - (logo.clientWidth / 2),
-		(home.clientHeight / 2) - (logo.clientHeight / 2) + menuHeight,
-		(home.clientWidth / 2) - (logo.clientWidth / 2),
-		(window.innerHeight / 2) - (logo.clientHeight / 2) + menuHeight,
-		"px"
-	);
 
 };
 /* !GENERIC FUNCTIONS */
@@ -61,11 +22,7 @@ var parallaxLogo = function () {
 /* CLASSES */
 var ClassLoad = function () {
 
-	var self = this;
-
-
-
-	self.css = function (prmUrl, prmCallback = function () {}) {
+	var mtdCss = function (prmUrl, prmCallback = function () {}) {
 
 		var css = document.createElement('link');
 
@@ -79,273 +36,365 @@ var ClassLoad = function () {
 
 
 
-	self.js = function (prmUrl, prmCallback = function () {}) {
+	var mtdJs = function (prmUrl, prmCallback = function () {}) {
 
 		var js = document.createElement('script');
 
 		js.setAttribute('src', prmUrl );
 		js.setAttribute('type', "text/javascript" );
 		js.onload = prmCallback;
-		document.getElementsByTagName('body').item(0).appendChild(js);
+		document.funcGetElementsByTagName('body').item(0).appendChild(js);
 
 	};
 
+
+
+	return {
+		css : mtdCss,
+		js : mtdJs
+	};
 };
 
 
 
 var ClassScroll = function () {
 
-	var self = this;
-
-
-
-	self.y = function () {
+	var mtdY = function () {
 		return window.scrollY;
 	};
 
 
 
-	self.go = function () {
+	var mtdGo = function () {
 
 		var id = this.href;
 		var url = location.href;
 		var seg = .5;
 		var jumpProp = 25;
-		var sub = getElement('.menu-control').clientHeight;
-		var iniY = window.scrollY;
-		var endY;
+		var sub = funcGetElement('.menu-control').clientHeight;
+		var prmIniY = window.scrollY;
+		var prmEndY;
 		var jumpNumber;
 		var jumpSize;
 		var jumpRest;
-		var scrolling;
+		var interval;
 		var i;
+
+		var scrolling = function () {
+			if (i == 0) {
+				window.scrollBy(0, jumpSizeRest);
+				clearInterval(interval);
+			} else {
+				window.scrollBy(0, jumpSize);
+				i--;
+			}
+		}
 
 		event.preventDefault();
 		location.href = '#' + id.replace(url.replace(/#(\w*\/?)*/, ''), '');
-		endY = window.scrollY - 70;
-		jumpNumber = parseInt(Math.sqrt(Math.pow(endY - iniY, 2)) / jumpProp);
-		if(jumpNumber >= 1){
-			window.scrollTo(0, iniY);
-			jumpSize =  parseInt(Math.sqrt(Math.pow(endY - iniY, 2)) / jumpNumber);
-			jumpSizeRest = Math.sqrt(Math.pow(endY - iniY, 2)) - (jumpSize * jumpNumber);
-			if(iniY > endY){
+		prmEndY = window.scrollY - 70;
+		jumpNumber = parseInt(Math.sqrt(Math.pow(prmEndY - prmIniY, 2)) / jumpProp);
+		if (jumpNumber >= 1) {
+			window.scrollTo(0, prmIniY);
+			jumpSize =  parseInt(Math.sqrt(Math.pow(prmEndY - prmIniY, 2)) / jumpNumber);
+			jumpSizeRest = Math.sqrt(Math.pow(prmEndY - prmIniY, 2)) - (jumpSize * jumpNumber);
+			if (prmIniY > prmEndY) {
 				jumpSize *= -1;
 				jumpSizeRest *= -1;
 			}
 			i = jumpNumber;
-			scrolling = setInterval(function () {
-				if (i == 0) {
-					window.scrollBy(0, jumpSizeRest);
-					clearInterval(scrolling);
-				} else {
-					window.scrollBy(0, jumpSize);
-					i--;
-				}
-			}, (seg * 1000) / jumpNumber);
+			interval = setInterval(scrolling, (seg * 1000) / jumpNumber);
 		}
 
 	};
 
 
 
-	self.parallax = function (iniP,endP,type,div,iniX,iniY,endX,endY,un,unY=un) {
+	var mtdParallax = function (prmId, prmType, prmIniParallax, prmEndParallax, prmIniX, prmIniY, prmEndX, prmEndY, prmUni, prmUniY = prmUni) {
 
 		var scroll = window.scrollY;
+		var move;
+		var moveX;
+		var moveY;
 
-		if (scroll >= iniP && scroll <= endP) {
-			move = ((scroll - iniP) * 100) / (endP - iniP);
-			moveX = (iniX - (((iniX - endX) * move) / 100)) + un;
-			moveY = (iniY - (((iniY - endY) * move) / 100)) + unY;
-		} else if (scroll < iniP) {
-			moveX = iniX + un;
-			moveY = iniY + unY;
+		if (
+			scroll >= prmIniParallax
+			&& scroll <= prmEndParallax
+		) {
+			move = ((scroll - prmIniParallax) * 100) / (prmEndParallax - prmIniParallax);
+			moveX = (prmIniX - (((prmIniX - prmEndX) * move) / 100)) + prmUni;
+			moveY = (prmIniY - (((prmIniY - prmEndY) * move) / 100)) + prmUniY;
+		} else if (scroll < prmIniParallax) {
+			moveX = prmIniX + prmUni;
+			moveY = prmIniY + prmUniY;
 		} else {
-			moveX = endX + un;
-			moveY = endY + unY;
+			moveX = prmEndX + prmUni;
+			moveY = prmEndY + prmUniY;
 		}
 
-		switch (type) {
+		switch (prmType) {
 			case 'bg':
-				div.style.backgroundPosition = moveX + ' ' + moveY;
+				prmId.style.backgroundPosition = moveX + ' ' + moveY;
 				break;
 
 			case 'tl':
-				div.style.top = moveY;
-				div.style.left = moveX;
+				prmId.style.top = moveY;
+				prmId.style.left = moveX;
 				break;
 
-			default:
-				alert('Type parallax|' + id + '| not valid');
+		   default:
+				alert('Type parallax|' + prmId + '| not valid');
 				break;
 		}
 	};
 
+
+
+	return {
+		y : mtdY,
+		go : mtdGo,
+		parallax : mtdParallax
+	};
+};
+
+
+
+var ClassLogo = function () {
+
+	var mtdEffect = function () {
+
+		var home = funcGetElement('.home');
+		var logo = funcGetElement('.home-logo');
+		var menuHeight = funcGetElement('.master').classList.contains('on-menu') ? 50 : 0;
+		var objScroll = new ClassScroll();
+
+		objScroll.parallax(
+			logo,
+			'tl',
+			(home.clientHeight / 2) - (logo.clientHeight / 2) + menuHeight,
+			home.clientHeight + menuHeight,
+			(home.clientWidth / 2) - (logo.clientWidth / 2),
+			(home.clientHeight / 2) - (logo.clientHeight / 2) + menuHeight,
+			(home.clientWidth / 2) - (logo.clientWidth / 2),
+			(window.innerHeight / 2) - (logo.clientHeight / 2) + menuHeight,
+			"px"
+		);
+
+	};
+
+
+
+	return {
+		effect : mtdEffect
+	};
 };
 
 
 
 var ClassMenu = function () {
 
-	var self = this;
-	var menu = getElement('.menu-control');
-	var home = getElement('.home');
-	var logo = getElement('.home-logo');
-	var slogan = getElement('.slogan');
-	var about = getElement('.about');
-	var experience = getElement('.experience');
+	var atrMenu = funcGetElement('.menu-control');
+	var atrHome = funcGetElement('.home');
+	var atrLogo = funcGetElement('.home-logo');
+	var atrSlogan = funcGetElement('.slogan.first');
+	var atrAbout = funcGetElement('.about');
+	var atrExperience = funcGetElement('.experiences');
+	var atrMenuHeight = 0;
 
 
 
-	self.color = function () {
+	var mtdControl = function () {
+
+		var master = funcGetElement('.master').classList;
+		var menuButton = funcGetElement('.menu-control');
+		var logoStyle = atrLogo.style;
+		var objLogo = new ClassLogo();
+
+		var logoReset = function () {
+			logoStyle.transition = '';
+		};
+
+		if (master.contains('on-menu')) {
+			master.remove('on-menu');
+			atrMenuHeight = 50;
+			menuButton.innerHTML = '&#xf0c9;';
+		} else {
+			master.add('on-menu');
+			atrMenuHeight = 0;
+			menuButton.innerHTML = '&#xf00d;';
+		}
+		logoStyle.transition = 'top .5s';
+		objLogo.effect();
+		setTimeout(logoReset, 500);
+
+	};
+
+
+
+	var mtdColor = function () {
 
 		var scroll = window.scrollY;
 
-		if (
-			slogan.classList.contains('ini')
-			&& scroll > home.clientHeight + (slogan.clientHeight / 2) - (logo.clientHeight / 2) - parseInt(logo.style.top) + menuHeight
-		) {
-			slogan.classList.remove('ini');
+		if (scroll > atrHome.clientHeight + (atrSlogan.clientHeight / 2) - (atrLogo.clientHeight / 2) - parseInt(atrLogo.style.top) + atrMenuHeight) {
+			atrSlogan.classList.remove('ini');
 		}
 		if (
-			!menu.classList.contains('invert')
+			!atrMenu.classList.contains('invert')
 			&& (
-				scroll > home.clientHeight + about.clientHeight + experience.clientHeight + (slogan.clientHeight * 2) - (menu.clientHeight / 2)
+				scroll > atrHome.clientHeight + atrAbout.clientHeight + atrExperience.clientHeight + (atrSlogan.clientHeight * 3) - (atrMenu.clientHeight / 2)
 				|| (
-					scroll > home.clientHeight - (menu.clientHeight / 2)
-					&& scroll <= home.clientHeight + about.clientHeight + (slogan.clientHeight * 2) - (menu.clientHeight / 2)
+					scroll > atrHome.clientHeight - (atrMenu.clientHeight / 2)
+					&& scroll <= atrHome.clientHeight + atrAbout.clientHeight + atrSlogan.clientHeight - (atrMenu.clientHeight / 2)
 				)
 			)
 		) {
-			menu.classList.add('invert');
+			atrMenu.classList.add('invert');
 		} else if (
-			menu.classList.contains('invert')
+			atrMenu.classList.contains('invert')
 			&& (
-				scroll <= home.clientHeight - (menu.clientHeight / 2)
+				scroll <= atrHome.clientHeight - (atrMenu.clientHeight / 2)
 				|| (
-					scroll > home.clientHeight + about.clientHeight + (slogan.clientHeight * 2) - (menu.clientHeight / 2)
-					&& scroll <= home.clientHeight + about.clientHeight + experience.clientHeight + (slogan.clientHeight * 2) - (menu.clientHeight / 2)
+					scroll > atrHome.clientHeight + atrAbout.clientHeight + atrSlogan.clientHeight - (atrMenu.clientHeight / 2)
+					&& scroll <= atrHome.clientHeight + atrAbout.clientHeight + atrExperience.clientHeight + (atrSlogan.clientHeight * 3) - (atrMenu.clientHeight / 2)
 				)
 			)
 		) {
-			menu.classList.remove('invert');
+			atrMenu.classList.remove('invert');
 		}
 	};
 
+
+
+	return {
+		control : mtdControl,
+		color : mtdColor
+	};
 };
 
 
 
 var ClassMusic = function () {
 
-	var self = this;
-	var home = getElement('.home');
-	var music = getElement('.home-music');
-	var playButton = getElement('.home-music-control b');
-	var bg;
-	var widthEnd;
-	var heightEnd;
-	var widthCenter;
-	var barSpace;
-	var analyser;
+	var atrHome = funcGetElement('.home');
+	var atrHomeMusic = funcGetElement('.home-music');
+	var atrPlayButton = funcGetElement('.home-music-control b');
+	var atrHomeBg;
+	var atrCanvas;
+	var atrWidthEnd;
+	var atrHeightEnd;
+	var atrWidthCenter;
+	var atrFrecNumber;
+	var atrFrecAnalyser;
+	var atrFrecArray;
 
 
 
-	self.create = function () {
+	var mtdCreate = function () {
 
 		var canvas = document.createElement('canvas');
 
 		canvas.setAttribute('class', 'home-bg');
-		home.appendChild(canvas);
-		bg = getElement('.home-bg');
+		atrHome.appendChild(canvas);
+		atrHomeBg = funcGetElement('.home-bg');
+		atrCanvas = atrHomeBg.getContext('2d');
 
 	};
 
 
 
-	self.sizing = function () {
-
-		bg.width = home.clientWidth;
-		bg.height = home.clientHeight;
-		widthEnd = bg.width;
-		heightEnd = bg.height;
-		widthCenter = widthEnd / 2;
-		barSpace = widthEnd / (analyser.frequencyBinCount * 2);
-
-	};
-
-
-
-	self.sinc = function () {
+	var mtdSinc = function () {
 
 		var context = new AudioContext();
-		var source = context.createMediaElementSource(music);
+		var source = context.createMediaElementSource(atrHomeMusic);
 
-		analyser = context.createAnalyser();
-		source.connect(analyser);
-		analyser.connect(context.destination);
-		frecArray = new Uint8Array(analyser.frequencyBinCount);
+		atrFrecAnalyser = context.createAnalyser();
+		source.connect(atrFrecAnalyser);
+		atrFrecAnalyser.connect(context.destination);
+		atrFrecArray = new Uint8Array(atrFrecAnalyser.frequencyBinCount);
 
 	};
 
 
 
-	self.animation = function () {
+	var mtdSizing = function () {
+
+		atrHomeBg.width = atrHome.clientWidth;
+		atrHomeBg.height = atrHome.clientHeight;
+		atrWidthEnd = atrHomeBg.width;
+		atrHeightEnd = atrHomeBg.height;
+		atrWidthCenter = atrWidthEnd / 2;
+		atrFrecNumber = atrWidthEnd / (atrFrecAnalyser.frequencyBinCount * 2);
+
+	};
+
+
+
+	var mtdAnimation = function () {
 
 		var frecInterval = 8;
 		var frecColor = 0;
-		var frecColorLim = 8;
+		var frecColorLim = 16;
+		var grd = atrCanvas.createLinearGradient(0, atrHeightEnd - 10, 0, atrHeightEnd - 255);
 		var i;
-		var canvas = bg.getContext('2d');
-		var grd = canvas.createLinearGradient(0, heightEnd - 10, 0, heightEnd - 255);
 
-		requestAnimationFrame(self.animation);
-		analyser.getByteFrequencyData(frecArray);
-		canvas.clearRect(0, 0, widthEnd, heightEnd);
-		canvas.fillStyle = 'rgba(' + parseInt(frecArray[frecColor] / frecColorLim) + ',' + parseInt((frecArray[frecColor] / frecColorLim) * (32 / 21)) + ',' + parseInt((frecArray[frecColor] / frecColorLim) * (54 / 21)) + ',' + (1 - (frecArray[frecColor] / 500)) + ')';
-		canvas.fillRect(0, 0, widthEnd, heightEnd);
+		requestAnimationFrame(mtdAnimation);
+		atrFrecAnalyser.getByteFrequencyData(atrFrecArray);
+		atrCanvas.clearRect(0, 0, atrWidthEnd, atrHeightEnd);
+		atrCanvas.fillStyle = 'rgba(' + parseInt(atrFrecArray[frecColor] / frecColorLim) + ',' + parseInt((atrFrecArray[frecColor] / frecColorLim) * (32 / 21)) + ',' + parseInt((atrFrecArray[frecColor] / frecColorLim) * (54 / 21)) + ',' + (1 - (atrFrecArray[frecColor] / 500)) + ')';
+		atrCanvas.fillRect(0, 0, atrWidthEnd, atrHeightEnd);
 		grd.addColorStop(0,'rgba(241, 228, 222, 1)');
 		grd.addColorStop(1,'rgba(241, 228, 222, 0)');
-		canvas.fillStyle = grd;
-		canvas.beginPath();
-		canvas.moveTo(widthCenter, heightEnd - frecArray[0]);
-		for (i = 1; i < analyser.frequencyBinCount; i += frecInterval) {
-			canvas.quadraticCurveTo(
-				widthCenter + ((i - (frecInterval / 2)) * barSpace),
-				heightEnd - frecArray[i] - ((frecArray[i - frecInterval] - frecArray[i]) / 2),
-				widthCenter + (i * barSpace),
-				heightEnd - frecArray[i]
+		atrCanvas.fillStyle = grd;
+		atrCanvas.beginPath();
+		atrCanvas.moveTo(atrWidthCenter, atrHeightEnd - atrFrecArray[0]);
+		for (i = 1; i < atrFrecAnalyser.frequencyBinCount; i += frecInterval) {
+			atrCanvas.quadraticCurveTo(
+				atrWidthCenter + ((i - (frecInterval / 2)) * atrFrecNumber),
+				atrHeightEnd - atrFrecArray[i] - ((atrFrecArray[i - frecInterval] - atrFrecArray[i]) / 2),
+				atrWidthCenter + (i * atrFrecNumber),
+				atrHeightEnd - atrFrecArray[i]
 			);
 		}
-		canvas.lineTo(widthCenter + i, heightEnd);
-		canvas.lineTo(widthCenter, heightEnd);
-		canvas.moveTo(widthCenter, heightEnd - frecArray[0]);
-		for (i = 1; i < analyser.frequencyBinCount; i += frecInterval) {
-			canvas.quadraticCurveTo(
-				widthCenter - ((i - (frecInterval / 2)) * barSpace),
-				heightEnd - frecArray[i] - ((frecArray[i - frecInterval] - frecArray[i]) / 2),
-				widthCenter - (i * barSpace),
-				heightEnd - frecArray[i]
+		atrCanvas.lineTo(atrWidthCenter + i, atrHeightEnd);
+		atrCanvas.lineTo(atrWidthCenter, atrHeightEnd);
+		atrCanvas.moveTo(atrWidthCenter, atrHeightEnd - atrFrecArray[0]);
+		for (i = 1; i < atrFrecAnalyser.frequencyBinCount; i += frecInterval) {
+			atrCanvas.quadraticCurveTo(
+				atrWidthCenter - ((i - (frecInterval / 2)) * atrFrecNumber),
+				atrHeightEnd - atrFrecArray[i] - ((atrFrecArray[i - frecInterval] - atrFrecArray[i]) / 2),
+				atrWidthCenter - (i * atrFrecNumber),
+				atrHeightEnd - atrFrecArray[i]
 			);
 		}
-		canvas.lineTo(widthCenter - i, heightEnd);
-		canvas.lineTo(widthCenter, heightEnd);
-		canvas.fill();
+		atrCanvas.lineTo(atrWidthCenter - i, atrHeightEnd);
+		atrCanvas.lineTo(atrWidthCenter, atrHeightEnd);
+		atrCanvas.fill();
 
 	};
 
 
 
-	self.play = function () {
-		if (music.paused) {
-		 	music.play();
-		 	playButton.innerHTML =  "&#xf04c";
+	var mtdPlay = function () {
+		if (atrHomeMusic.paused) {
+		 	atrHomeMusic.play();
+		 	atrPlayButton.innerHTML =  "&#xf04c";
+			atrHomeBg.style.opacity = 1;
 		} else {
-			music.pause();
-			playButton.innerHTML =  "&#xf04b";
+			atrHomeMusic.pause();
+			atrPlayButton.innerHTML =  "&#xf04b";
+			atrHomeBg.style.opacity = .5;
 		}
 	};
 
+
+
+	return {
+		create : mtdCreate,
+		sinc : mtdSinc,
+		sizing : mtdSizing,
+		animation : mtdAnimation,
+		play : mtdPlay
+	};
 };
 /* !CLASSES */
 
@@ -356,15 +405,16 @@ var i;
 var objLoad = new ClassLoad();
 var objScroll = new ClassScroll();
 var objMenu = new ClassMenu();
+var objLogo = new ClassLogo();
 var objMusic = new ClassMusic();
 /* !CODE */
 
 
 
 /* EVENTS ADDED */
-addEvent('.menu-control', 'click', menuControl);
-addEvent('.home-music-control b', 'click', objMusic.play);
-addEvent('.link-scroll', 'click', objScroll.go);
+funcAddEvent('.menu-control', 'click', objMenu.control);
+funcAddEvent('.home-music-control b', 'click', objMusic.play);
+funcAddEvent('.link-scroll', 'click', objScroll.go);
 /* !EVENTS ADDED */
 
 
@@ -372,26 +422,34 @@ addEvent('.link-scroll', 'click', objScroll.go);
 /* WINDOW EVENTS */
 window.onload = function () {
 
-	objLoad.css('css/files.css', function () {
+	var loadFiles = function () {
 
-		var loading = getElement('.loading');
+		var loading = funcGetElement('.loading');
+
+		var offLoading = function () {
+
+			var show = function () {
+				loading.style.display = 'none';
+				funcGetElement('.home-logo').style.opacity = 1;
+				objMusic.play();
+			}
+
+			loading.style.opacity = 0;
+			setTimeout(show, 500);
+
+		};
 
 		loading.innerHTML = "<p>Bem-vindo</p>";
 		objMusic.create();
 		objMusic.sinc();
 		objMusic.sizing();
 		objMusic.animation();
-		parallaxLogo();
-		setTimeout(function () {
-			loading.style.opacity = 0;
-			setTimeout(function () {
-				loading.style.display = 'none';
-				getElement('.home-logo').style.opacity = 1;
-				objMusic.play();
-			}, 500);
-		}, 500);
+		objLogo.effect();
+		setTimeout(offLoading, 500);
 
-	});
+	};
+
+	objLoad.css('css/files.css', loadFiles);
 
 };
 
@@ -400,7 +458,7 @@ window.onload = function () {
 window.onresize = function () {
 
 	objMusic.sizing();
-	parallaxLogo();
+	objLogo.effect();
 
 };
 
@@ -408,8 +466,9 @@ window.onresize = function () {
 
 window.onscroll = function () {
 
-	parallaxLogo();
 	objMenu.color();
+	objLogo.effect();
+	objScroll.parallax(funcGetElement('.home'), 'bg', 0, funcGetElement('.home').clientHeight, 50, -100, 50, 200, '%', 'px');
 
 };
 /* !WINDOW EVENTS */
