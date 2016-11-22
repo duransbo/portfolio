@@ -72,7 +72,6 @@ var ClassScroll = function () {
 		var seg = .5;
 		var jumpProp = 25;
 		var sub = funcGetElement('.menu').clientHeight;
-		console.log(sub);
 		var prmIniY = window.scrollY;
 		var prmEndY;
 		var jumpNumber;
