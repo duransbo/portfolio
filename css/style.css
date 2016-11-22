@@ -9,7 +9,7 @@ body {
 	font-weight: 600;
 	font-size: 1.8rem;
 	color: #111;
-	letter-spacing: 0.2rem;
+	letter-spacing: .2rem;
 }
 b {
 	font-weight: normal;
@@ -29,36 +29,39 @@ p {
 
 
 
+/* MASTER */
+.master {
+	padding-top: 0;
+	transition: padding-top .5s;
+}
+.on-menu {
+	padding-top: var(--menu-lenght);
+}
+.on-menu .menu{
+	height: var(--menu-lenght);
+}
+.on-menu .menu-control{
+	border-radius: 0;
+	color: #fff !important;
+}
+/* !MASTER */
+
+
+
 /* HEADER */
-.master > header {
+.header {
 	height: var(--menu-lenght);
 	z-index: 2;
 	position: absolute;
-	top: 0;
 	color: #fff;
 	justify-content: center;
-	align-items: center;
 	transition: top .5s;
 }
-.master > header > h1 {
+.header > h1 {
 	font-size: 1.8rem;
-}
-.on-menu > header {
-	top: var(--menu-lenght);
+	line-height: var(--menu-lenght);
 }
 /* !HEADER */
-
-
-
-/* PAGES */
-.pages {
-	top: 0;
-	transition: top .5s;
-}
-.on-menu .pages {
-	top: var(--menu-lenght);
-}
-/* !PAGES */
 
 
 
@@ -67,14 +70,16 @@ p {
 	height: 0px;
 	z-index: 998;
 	position: fixed;
+	top: 0px;
 	background-color: darkorange;
-	transition: height .5s;
 	flex-wrap: nowrap;
+	transition: height .5s;
 }
 .menu *:not(.menu-control) {
 	height: 100%;
 }
 .menu-control {
+	border-radius: 0 0 30% 0;
 	cursor: pointer;
 }
 .menu-control,
@@ -94,12 +99,6 @@ p {
 }
 .menu-link > a {
 	width: 100%;
-}
-.on-menu .menu{
-	height: var(--menu-lenght);
-}
-.on-menu .menu-control{
-	color: #fff !important;
 }
 /* !MENU */
 
@@ -243,6 +242,7 @@ p {
 }
 .projects-list {
 	margin: 30px 0;
+	background-color: #fff;
 }
 .project {
 	--width: calc(100% / var(--n));
@@ -251,8 +251,11 @@ p {
 	width: var(--width);
 	height: var(--height);
 	box-shadow: 0px 0px 10px #000 inset;
-	background-color: rgba(100, 100, 100, .9);
+	background-color: rgba(0, 0, 0, .9);
+	background-size: cover;
+	background-position: center center;
 	color: #fff;
+	text-align: center;
 	justify-content: center;
 	align-items: center;
 }
@@ -295,9 +298,11 @@ p {
 
 
 
-	.master > header {
-		padding: 0 25px 0 0;
+	.header {
 		justify-content: flex-end;
+	}
+	.header > h1 {
+		margin-right: 25px;
 	}
 
 
@@ -382,11 +387,16 @@ p {
 
 	.project {
 		--n: 2;
-
-		transition: all .5s;
 	}
 }
 
+
+
+@media screen and (min-width: 620px) and (max-width: 899px) {
+	.project.span {
+		width: calc(var(--width) * 2);
+	}
+}
 
 
 @media screen and (min-width: 900px) {
@@ -407,9 +417,11 @@ p {
 
 	.project {
 		--n: 3;
+
+		transition: background-color .5s;
 	}
 	.project:hover {
-		background-color: rgba(150, 150, 150, .9);
+		background-color: rgba(0, 0, 0, .5);
 	}
 }
 /* QUERIES */

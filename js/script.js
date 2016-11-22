@@ -43,7 +43,7 @@ var ClassLoad = function () {
 		js.setAttribute('src', prmUrl );
 		js.setAttribute('type', "text/javascript" );
 		js.onload = prmCallback;
-		document.funcGetElementsByTagName('body').item(0).appendChild(js);
+		document.getElementsByTagName('body').item(0).appendChild(js);
 
 	};
 
@@ -65,7 +65,7 @@ var ClassScroll = function () {
 
 
 
-	var mtdGo = function () {
+	var mtdGo = function (e) {
 
 		var id = this.href;
 		var url = location.href;
@@ -90,9 +90,9 @@ var ClassScroll = function () {
 			}
 		}
 
-		event.preventDefault();
+		e.preventDefault();
 		location.href = '#' + id.replace(url.replace(/#(\w*\/?)*/, ''), '');
-		prmEndY = window.scrollY - 70;
+		prmEndY = window.scrollY - sub;
 		jumpNumber = parseInt(Math.sqrt(Math.pow(prmEndY - prmIniY, 2)) / jumpProp);
 		if (jumpNumber >= 1) {
 			window.scrollTo(0, prmIniY);
@@ -241,11 +241,8 @@ var ClassMenu = function () {
 		if (
 			!atrMenu.classList.contains('invert')
 			&& (
-				scroll > atrHome.clientHeight + atrAbout.clientHeight + atrExperience.clientHeight + (atrSlogan.clientHeight * 3) - (atrMenu.clientHeight / 2)
-				|| (
-					scroll > atrHome.clientHeight - (atrMenu.clientHeight / 2)
-					&& scroll <= atrHome.clientHeight + atrAbout.clientHeight + atrSlogan.clientHeight - (atrMenu.clientHeight / 2)
-				)
+				scroll > atrHome.clientHeight - (atrMenu.clientHeight / 2)
+				&& scroll <= atrHome.clientHeight + atrAbout.clientHeight + atrSlogan.clientHeight - (atrMenu.clientHeight / 2)
 			)
 		) {
 			atrMenu.classList.add('invert');
@@ -253,10 +250,7 @@ var ClassMenu = function () {
 			atrMenu.classList.contains('invert')
 			&& (
 				scroll <= atrHome.clientHeight - (atrMenu.clientHeight / 2)
-				|| (
-					scroll > atrHome.clientHeight + atrAbout.clientHeight + atrSlogan.clientHeight - (atrMenu.clientHeight / 2)
-					&& scroll <= atrHome.clientHeight + atrAbout.clientHeight + atrExperience.clientHeight + (atrSlogan.clientHeight * 3) - (atrMenu.clientHeight / 2)
-				)
+				|| scroll > atrHome.clientHeight + atrAbout.clientHeight + atrSlogan.clientHeight - (atrMenu.clientHeight / 2)
 			)
 		) {
 			atrMenu.classList.remove('invert');
@@ -331,44 +325,48 @@ var ClassMusic = function () {
 
 	var mtdAnimation = function () {
 
-		var frecInterval = 8;
-		var frecColor = 0;
-		var frecColorLim = 16;
-		var grd = atrCanvas.createLinearGradient(0, atrHeightEnd - 10, 0, atrHeightEnd - 255);
-		var i;
-
 		requestAnimationFrame(mtdAnimation);
-		atrFrecAnalyser.getByteFrequencyData(atrFrecArray);
+
 		atrCanvas.clearRect(0, 0, atrWidthEnd, atrHeightEnd);
-		atrCanvas.fillStyle = 'rgba(' + parseInt(atrFrecArray[frecColor] / frecColorLim) + ',' + parseInt((atrFrecArray[frecColor] / frecColorLim) * (32 / 21)) + ',' + parseInt((atrFrecArray[frecColor] / frecColorLim) * (54 / 21)) + ',' + (1 - (atrFrecArray[frecColor] / 500)) + ')';
-		atrCanvas.fillRect(0, 0, atrWidthEnd, atrHeightEnd);
-		grd.addColorStop(0,'rgba(241, 228, 222, 1)');
-		grd.addColorStop(1,'rgba(241, 228, 222, 0)');
-		atrCanvas.fillStyle = grd;
-		atrCanvas.beginPath();
-		atrCanvas.moveTo(atrWidthCenter, atrHeightEnd - atrFrecArray[0]);
-		for (i = 1; i < atrFrecAnalyser.frequencyBinCount; i += frecInterval) {
-			atrCanvas.quadraticCurveTo(
-				atrWidthCenter + ((i - (frecInterval / 2)) * atrFrecNumber),
-				atrHeightEnd - atrFrecArray[i] - ((atrFrecArray[i - frecInterval] - atrFrecArray[i]) / 2),
-				atrWidthCenter + (i * atrFrecNumber),
-				atrHeightEnd - atrFrecArray[i]
-			);
+		if (!atrHomeMusic.paused) {
+
+			var frecInterval = 8;
+			var frecColor = 0;
+			var frecColorLim = 16;
+			var grd = atrCanvas.createLinearGradient(0, atrHeightEnd - 10, 0, atrHeightEnd - 255);
+			var i;
+
+			atrFrecAnalyser.getByteFrequencyData(atrFrecArray);
+			atrCanvas.fillStyle = 'rgba(' + parseInt(atrFrecArray[frecColor] / frecColorLim) + ',' + parseInt((atrFrecArray[frecColor] / frecColorLim) * (32 / 21)) + ',' + parseInt((atrFrecArray[frecColor] / frecColorLim) * (54 / 21)) + ',' + (1 - (atrFrecArray[frecColor] / 500)) + ')';
+			atrCanvas.fillRect(0, 0, atrWidthEnd, atrHeightEnd);
+			grd.addColorStop(0,'rgba(241, 228, 222, 1)');
+			grd.addColorStop(1,'rgba(241, 228, 222, 0)');
+			atrCanvas.fillStyle = grd;
+			atrCanvas.beginPath();
+			atrCanvas.moveTo(atrWidthCenter, atrHeightEnd - atrFrecArray[0]);
+			for (i = 0; i < atrFrecAnalyser.frequencyBinCount; i += frecInterval) {
+				atrCanvas.quadraticCurveTo(
+					atrWidthCenter + ((i - (frecInterval / 2)) * atrFrecNumber),
+					atrHeightEnd - atrFrecArray[i] - ((atrFrecArray[i - frecInterval] - atrFrecArray[i]) / 2),
+					atrWidthCenter + (i * atrFrecNumber),
+					atrHeightEnd - atrFrecArray[i]
+				);
+			}
+			atrCanvas.lineTo(atrWidthCenter + i, atrHeightEnd);
+			atrCanvas.lineTo(atrWidthCenter, atrHeightEnd);
+			atrCanvas.moveTo(atrWidthCenter, atrHeightEnd - atrFrecArray[0]);
+			for (i = 0; i < atrFrecAnalyser.frequencyBinCount; i += frecInterval) {
+				atrCanvas.quadraticCurveTo(
+					atrWidthCenter - ((i - (frecInterval / 2)) * atrFrecNumber),
+					atrHeightEnd - atrFrecArray[i] - ((atrFrecArray[i - frecInterval] - atrFrecArray[i]) / 2),
+					atrWidthCenter - (i * atrFrecNumber),
+					atrHeightEnd - atrFrecArray[i]
+				);
+			}
+			atrCanvas.lineTo(atrWidthCenter - i, atrHeightEnd);
+			atrCanvas.lineTo(atrWidthCenter, atrHeightEnd);
+			atrCanvas.fill();
 		}
-		atrCanvas.lineTo(atrWidthCenter + i, atrHeightEnd);
-		atrCanvas.lineTo(atrWidthCenter, atrHeightEnd);
-		atrCanvas.moveTo(atrWidthCenter, atrHeightEnd - atrFrecArray[0]);
-		for (i = 1; i < atrFrecAnalyser.frequencyBinCount; i += frecInterval) {
-			atrCanvas.quadraticCurveTo(
-				atrWidthCenter - ((i - (frecInterval / 2)) * atrFrecNumber),
-				atrHeightEnd - atrFrecArray[i] - ((atrFrecArray[i - frecInterval] - atrFrecArray[i]) / 2),
-				atrWidthCenter - (i * atrFrecNumber),
-				atrHeightEnd - atrFrecArray[i]
-			);
-		}
-		atrCanvas.lineTo(atrWidthCenter - i, atrHeightEnd);
-		atrCanvas.lineTo(atrWidthCenter, atrHeightEnd);
-		atrCanvas.fill();
 
 	};
 
