@@ -447,7 +447,7 @@ window.onload = function () {
 
 	};
 
-	objLoad.css('css/files.css', loadFiles);
+	objLoad.css('asset/css/files.css', loadFiles);
 
 };
 

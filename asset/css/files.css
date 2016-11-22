@@ -1,0 +1,66 @@
+/* FONTS */
+@font-face {
+	font-family: 'Roboto';
+	src: url('../font/Roboto-Regular.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Roboto';
+	src: url('../font/Roboto-Italic.ttf');
+	font-weight: normal;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'Roboto';
+	src: url('../font/Roboto-Light.ttf');
+	font-weight: 300;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Roboto';
+	src: url('../font/Roboto-LightItalic.ttf');
+	font-weight: 300;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'Roboto';
+	src: url('../font/Roboto-Medium.ttf');
+	font-weight: 600;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Roboto';
+	src: url('../font/Roboto-MediumItalic.ttf');
+	font-weight: 600;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'Roboto';
+	src: url('../font/Roboto-Bold.ttf');
+	font-weight: 900;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Roboto';
+	src: url('../font/Roboto-BoldItalic.ttf');
+	font-weight: 900;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'FontAwesome';
+	src: url('../font/fontawesome-webfont.eot?v=4.3.0');
+	src: url('../font/fontawesome-webfont.eot?#iefix&v=4.3.0') format('embedded-opentype'), url('../font/fontawesome-webfont.woff2?v=4.3.0') format('woff2'), url('../font/fontawesome-webfont.woff?v=4.3.0') format('woff'), url('../font/fontawesome-webfont.ttf?v=4.3.0') format('truetype'), url('../font/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular') format('svg');
+}
+/* !FONTS */
+
+
+
+/* IMAGES */
+.home {
+	background-image: url('../image/bg.png');
+}
+.slogan {
+	background-image: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)), url('../image/bg_alpha.png');
+}
+/* IMAGES */
